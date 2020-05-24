@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="lt.viko.eif.dienynas.fragments.MainFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_main"/>
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="lt.viko.eif.dienynas.fragments.LoginFragment"
+        android:label="@string/menu_login"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/nav_groups"
+        android:name="lt.viko.eif.dienynas.fragments.GroupsFragment"
+        android:label="@string/menu_groups"
+        tools:layout="@layout/fragment_groups" >
+        <action
+            android:id="@+id/action_nav_groups_to_createGroupFragment"
+            app:destination="@id/nav_create_group" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_create_group"
+        android:name="lt.viko.eif.dienynas.fragments.CreateGroupFragment"
+        android:label="fragment_create_group"
+        tools:layout="@layout/fragment_create_group" />
+    <fragment
+        android:id="@+id/nav_single_group"
+        android:name="lt.viko.eif.dienynas.fragments.SingleGroupFragment"
+        android:label="fragment_single_group"
+        tools:layout="@layout/fragment_single_group" >
+        <action
+            android:id="@+id/action_nav_single_group_to_nav_add_student"
+            app:destination="@id/nav_add_student" />
+        <action
+            android:id="@+id/action_nav_single_group_to_addTaskFragment"
+            app:destination="@id/nav_add_task" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_add_student"
+        android:name="lt.viko.eif.dienynas.fragments.AddStudentFragment"
+        android:label="fragment_add_student"
+        tools:layout="@layout/fragment_add_student" />
+    <fragment
+        android:id="@+id/nav_add_task"
+        android:name="lt.viko.eif.dienynas.fragments.AddTaskFragment"
+        android:label="fragment_add_task"
+        tools:layout="@layout/fragment_add_task" />
+
+</navigation>

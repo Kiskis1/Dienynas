@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Dienynas</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_login">Login</string>
+    <string name="menu_groups">Groups</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="action_add_students">Add students</string>
+    <string name="action_add_task">Add task</string>
+    <string name="action_save">Save grades</string>
+    <string name="action_export">Export grades</string>
+
+    <string name="main_explanation">TODO: Explanation \n TEST</string>
+    <string name="text_type_student_id">Type your student ID:</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="button_search_by_id">Search</string>
+    <string name="sample_student_code">012345</string>
+    <string name="start_of_student_code">S</string>
+    <string name="content_description_group_logo">Group logo</string>
+    <string name="item_group_name">TextView</string>
+</resources>

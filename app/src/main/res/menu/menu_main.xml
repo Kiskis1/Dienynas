@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="lt.viko.eif.dienynas.MainActivity">
+    <item
+        android:id="@+id/action_add_students"
+        android:orderInCategory="100"
+        android:title="@string/action_add_students"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_add_task"
+        android:orderInCategory="100"
+        android:title="@string/action_add_task"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_save"
+        android:orderInCategory="100"
+        android:title="@string/action_save"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_export"
+        android:orderInCategory="100"
+        android:title="@string/action_export"
+        app:showAsAction="never" />
+</menu>
