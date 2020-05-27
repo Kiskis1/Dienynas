@@ -18,8 +18,7 @@ public class StorageRepository {
 
     public Destytojas getDestytojas() {
         String jsonFileString = Utils.getJsonFromAssets(App.getContext(), "db.json");
-        Log.i("data", jsonFileString);
-        Destytojas dest = Utils.getGsonParser().fromJson(jsonFileString, Destytojas.class);
-        return dest;
+        //Log.i("data", jsonFileString);
+        return Utils.getGsonParser().fromJson(jsonFileString, Destytojas.class);
     }
 }

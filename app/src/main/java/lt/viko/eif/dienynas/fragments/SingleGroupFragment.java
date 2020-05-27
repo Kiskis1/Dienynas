@@ -1,9 +1,5 @@
 package lt.viko.eif.dienynas.fragments;
 
-import android.app.ActionBar;
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Point;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,7 +9,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,7 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -40,6 +34,7 @@ import lt.viko.eif.dienynas.models.Group;
 import lt.viko.eif.dienynas.models.Student;
 import lt.viko.eif.dienynas.utils.Utils;
 
+//        https://github.com/shabyWoks/DynamicTableLayout/blob/master/app/src/main/java/com/shaby/dynamictablelayout/MainActivity.java
 //TODO: SET TITLE TO GROUP NAME
 public class SingleGroupFragment extends Fragment implements HorizontalScroll.ScrollViewListener, VerticalScroll.ScrollViewListener {
     private final static String TAG = SingleGroupFragment.class.getSimpleName();
@@ -69,21 +64,13 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
     private VerticalScroll scrollViewC;
     private VerticalScroll scrollViewD;
 
-    private int width = SCREEN_WIDTH / 5;
-    private int height = SCREEN_HEIGHT / 20;
-
-    /*
-         This is for counting how many columns are added in the row.
-    */
     private int tableColumnCountB = 0;
-
-    /*
-         This is for counting how many row is added.
-    */
     private int tableRowCountC = 0;
 
+    private final int COLUMNS_PER_SCREEN = 3;
+    private final int ROWS_PER_SCREEN = 9;
+
     public SingleGroupFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -93,17 +80,12 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
         //Log.i(TAG, getArguments().getString("group"));
         assert getArguments() != null;
         group = Utils.getGsonParser().fromJson(getArguments().getString("group"), Group.class);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_single_group, container, false);
-//https://www.youtube.com/watch?v=iwpM2PppgH8
-//        https://github.com/shabyWoks/DynamicTableLayout/blob/master/app/src/main/java/com/shaby/dynamictablelayout/MainActivity.java
-//        https://stackoverflow.com/questions/10928288/getting-data-from-tablelayout
-
 
         relativeLayoutMain = root.findViewById(R.id.relativeLayoutMain);
         getScreenDimension();
@@ -117,20 +99,37 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
         addRowToTableA();
         initializeRowForTableB();
 
-        for (int i = 0; i < group.getTask().size(); i++) {
-            addColumnsToTableB(group.getTask().get(i), i);
+        for (String s : group.getTask()) {
+            addColumnsToTableB(s, 0);
         }
 
-        for (int i = 0; i < group.getStudents().size(); i++) {
+        int i = 0;
+        for (Student stud : group.getStudents()) {
             initializeRowForTableD(i);
-            addRowToTableC(group.getStudents().get(i).getCodeFullName());
-            for (int j = 0; j < group.getStudents().get(i).getGrades().size(); j++) {
-                addColumnToTableAtD(i, group.getStudents().get(i).getGrades().get(j));
+            addRowToTableC(stud.getCodeFullName());
+            for (int g : stud.getGrades()) {
+                addColumnToTableAtD(i, g);
             }
+            i++;
         }
-
-        
+        getInfo();
         return root;
+    }
+
+    private void getInfo() {
+        for (int i = 0; i < tableRowCountC; i++) {
+            TableRow row = (TableRow) tableLayoutC.getChildAt(i);
+            TableRow row2 = (TableRow) row.getChildAt(0);
+            TextView view = (TextView) row2.getChildAt(0);
+            Log.i(TAG, view.getText().toString());
+            for (int j = 0; j < tableColumnCountB; j++) {
+                TableRow row3 = (TableRow) tableLayoutD.getChildAt(i);
+                TableRow row4 = (TableRow) row3.getChildAt(j);
+                Spinner spin = (Spinner) row4.getChildAt(0);
+                Log.i(TAG, spin.getSelectedItem().toString());
+            }
+            Log.i(TAG, "SPACE");
+        }
     }
 
     private void getScreenDimension() {
@@ -155,26 +154,24 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
         relativeLayoutD.setId(R.id.relativeLayoutD);
         relativeLayoutD.setPadding(0, 0, 0, 0);
 
-        relativeLayoutA.setLayoutParams(new RelativeLayout.LayoutParams(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 9));
+        relativeLayoutA.setLayoutParams(new RelativeLayout.LayoutParams(SCREEN_WIDTH / COLUMNS_PER_SCREEN, SCREEN_HEIGHT / ROWS_PER_SCREEN));
         this.relativeLayoutMain.addView(relativeLayoutA);
 
-
-        RelativeLayout.LayoutParams layoutParamsRelativeLayoutB= new RelativeLayout.LayoutParams(SCREEN_WIDTH- (SCREEN_WIDTH/3), SCREEN_HEIGHT/9);
+        RelativeLayout.LayoutParams layoutParamsRelativeLayoutB = new RelativeLayout.LayoutParams(SCREEN_WIDTH - (SCREEN_WIDTH / COLUMNS_PER_SCREEN), SCREEN_HEIGHT / ROWS_PER_SCREEN);
         layoutParamsRelativeLayoutB.addRule(RelativeLayout.RIGHT_OF, R.id.relativeLayoutA);
         relativeLayoutB.setLayoutParams(layoutParamsRelativeLayoutB);
         this.relativeLayoutMain.addView(relativeLayoutB);
 
-        RelativeLayout.LayoutParams layoutParamsRelativeLayoutC= new RelativeLayout.LayoutParams(SCREEN_WIDTH/3, SCREEN_HEIGHT - (SCREEN_HEIGHT/9));
+        RelativeLayout.LayoutParams layoutParamsRelativeLayoutC = new RelativeLayout.LayoutParams(SCREEN_WIDTH / COLUMNS_PER_SCREEN, SCREEN_HEIGHT - (SCREEN_HEIGHT / ROWS_PER_SCREEN));
         layoutParamsRelativeLayoutC.addRule(RelativeLayout.BELOW, R.id.relativeLayoutA);
         relativeLayoutC.setLayoutParams(layoutParamsRelativeLayoutC);
         this.relativeLayoutMain.addView(relativeLayoutC);
 
-        RelativeLayout.LayoutParams layoutParamsRelativeLayoutD= new RelativeLayout.LayoutParams(SCREEN_WIDTH- (SCREEN_WIDTH/3), SCREEN_HEIGHT - (SCREEN_HEIGHT/9));
+        RelativeLayout.LayoutParams layoutParamsRelativeLayoutD = new RelativeLayout.LayoutParams(SCREEN_WIDTH - (SCREEN_WIDTH / COLUMNS_PER_SCREEN), SCREEN_HEIGHT - (SCREEN_HEIGHT / ROWS_PER_SCREEN));
         layoutParamsRelativeLayoutD.addRule(RelativeLayout.BELOW, R.id.relativeLayoutB);
         layoutParamsRelativeLayoutD.addRule(RelativeLayout.RIGHT_OF, R.id.relativeLayoutC);
         relativeLayoutD.setLayoutParams(layoutParamsRelativeLayoutD);
         this.relativeLayoutMain.addView(relativeLayoutD);
-
     }
 
     private void initializeScrollers() {
@@ -190,17 +187,15 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
         scrollViewD = new VerticalScroll(getContext());
         scrollViewD.setPadding(0, 0, 0, 0);
 
-        horizontalScrollViewB.setLayoutParams(new ViewGroup.LayoutParams(SCREEN_WIDTH- (SCREEN_WIDTH/3), SCREEN_HEIGHT / 9));
-        scrollViewC.setLayoutParams(new ViewGroup.LayoutParams(SCREEN_WIDTH/3 ,SCREEN_HEIGHT - (SCREEN_HEIGHT/9)));
-        scrollViewD.setLayoutParams(new ViewGroup.LayoutParams(SCREEN_WIDTH- (SCREEN_WIDTH/3), SCREEN_HEIGHT - (SCREEN_HEIGHT/9)));
-        horizontalScrollViewD.setLayoutParams(new ViewGroup.LayoutParams(SCREEN_WIDTH - (SCREEN_WIDTH / 3), SCREEN_HEIGHT - (SCREEN_HEIGHT / 9)));
-
+        horizontalScrollViewB.setLayoutParams(new ViewGroup.LayoutParams(SCREEN_WIDTH - (SCREEN_WIDTH / COLUMNS_PER_SCREEN), SCREEN_HEIGHT / ROWS_PER_SCREEN));
+        scrollViewC.setLayoutParams(new ViewGroup.LayoutParams(SCREEN_WIDTH / COLUMNS_PER_SCREEN, SCREEN_HEIGHT - (SCREEN_HEIGHT / ROWS_PER_SCREEN)));
+        scrollViewD.setLayoutParams(new ViewGroup.LayoutParams(SCREEN_WIDTH - (SCREEN_WIDTH / COLUMNS_PER_SCREEN), SCREEN_HEIGHT - (SCREEN_HEIGHT / ROWS_PER_SCREEN)));
+        horizontalScrollViewD.setLayoutParams(new ViewGroup.LayoutParams(SCREEN_WIDTH - (SCREEN_WIDTH / COLUMNS_PER_SCREEN), SCREEN_HEIGHT - (SCREEN_HEIGHT / ROWS_PER_SCREEN)));
 
         this.relativeLayoutB.addView(horizontalScrollViewB);
         this.relativeLayoutC.addView(scrollViewC);
         this.scrollViewD.addView(horizontalScrollViewD);
         this.relativeLayoutD.addView(scrollViewD);
-
     }
 
     private void initializeTableLayout() {
@@ -214,17 +209,17 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
         tableLayoutD = new TableLayout(getContext());
         tableLayoutD.setPadding(0, 0, 0, 0);
 
-        TableLayout.LayoutParams layoutParamsTableLayoutA = new TableLayout.LayoutParams(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 9);
+        TableLayout.LayoutParams layoutParamsTableLayoutA = new TableLayout.LayoutParams(SCREEN_WIDTH / COLUMNS_PER_SCREEN, SCREEN_HEIGHT / ROWS_PER_SCREEN);
         tableLayoutA.setLayoutParams(layoutParamsTableLayoutA);
         tableLayoutA.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
         this.relativeLayoutA.addView(tableLayoutA);
 
-        TableLayout.LayoutParams layoutParamsTableLayoutB = new TableLayout.LayoutParams(SCREEN_WIDTH - (SCREEN_WIDTH / 3), SCREEN_HEIGHT / 9);
+        TableLayout.LayoutParams layoutParamsTableLayoutB = new TableLayout.LayoutParams(SCREEN_WIDTH - (SCREEN_WIDTH / COLUMNS_PER_SCREEN), SCREEN_HEIGHT / ROWS_PER_SCREEN);
         tableLayoutB.setLayoutParams(layoutParamsTableLayoutB);
         tableLayoutB.setBackgroundColor(getResources().getColor(R.color.colorSecondary));
         this.horizontalScrollViewB.addView(tableLayoutB);
 
-        TableLayout.LayoutParams layoutParamsTableLayoutC = new TableLayout.LayoutParams(SCREEN_WIDTH / 3, SCREEN_HEIGHT - (SCREEN_HEIGHT / 9));
+        TableLayout.LayoutParams layoutParamsTableLayoutC = new TableLayout.LayoutParams(SCREEN_WIDTH / COLUMNS_PER_SCREEN, SCREEN_HEIGHT - (SCREEN_HEIGHT / ROWS_PER_SCREEN));
         tableLayoutC.setLayoutParams(layoutParamsTableLayoutC);
         tableLayoutC.setBackgroundColor(getResources().getColor(R.color.colorSecondary));
         this.scrollViewC.addView(tableLayoutC);
@@ -232,16 +227,14 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
         TableLayout.LayoutParams layoutParamsTableLayoutD = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT);
         tableLayoutD.setLayoutParams(layoutParamsTableLayoutD);
         this.horizontalScrollViewD.addView(tableLayoutD);
-
     }
 
     private void addRowToTableA() {
         tableRow = new TableRow(getContext());
-        TableRow.LayoutParams layoutParamsTableRow = new TableRow.LayoutParams(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 9);
+        TableRow.LayoutParams layoutParamsTableRow = new TableRow.LayoutParams(SCREEN_WIDTH / COLUMNS_PER_SCREEN, SCREEN_HEIGHT / ROWS_PER_SCREEN);
         tableRow.setLayoutParams(layoutParamsTableRow);
         TextView label_date = new TextView(getContext());
-        String rowText = "Kodas\nVardas\nPavarde";
-        label_date.setText(rowText);
+        label_date.setText(R.string.table_code_and_name);
         tableRow.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
         label_date.setTextSize(getResources().getDimension(R.dimen.cell_text_size));
         tableRow.addView(label_date);
@@ -256,21 +249,20 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
 
     private synchronized void addColumnsToTableB(String text, final int id) {
         tableRow = new TableRow(getContext());
-        TableRow.LayoutParams layoutParamsTableRow = new TableRow.LayoutParams(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 9);
+        TableRow.LayoutParams layoutParamsTableRow = new TableRow.LayoutParams(SCREEN_WIDTH / COLUMNS_PER_SCREEN, SCREEN_HEIGHT / ROWS_PER_SCREEN);
         tableRow.setPadding(3, 3, 3, 4);
         tableRow.setLayoutParams(layoutParamsTableRow);
         TextView label_date = new TextView(getContext());
         label_date.setText(text);
         label_date.setTextSize(getResources().getDimension(R.dimen.cell_text_size));
         this.tableRow.addView(label_date);
-        this.tableRow.setTag(id);
         this.tableRowB.addView(tableRow);
         tableColumnCountB++;
     }
 
     private synchronized void addRowToTableC(String text) {
         TableRow tableRow1 = new TableRow(getContext());
-        TableRow.LayoutParams layoutParamsTableRow1 = new TableRow.LayoutParams(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 9);
+        TableRow.LayoutParams layoutParamsTableRow1 = new TableRow.LayoutParams(SCREEN_WIDTH / COLUMNS_PER_SCREEN, SCREEN_HEIGHT / ROWS_PER_SCREEN);
         tableRow1.setPadding(3, 3, 3, 4);
         tableRow1.setLayoutParams(layoutParamsTableRow1);
         TextView label_date = new TextView(getContext());
@@ -279,7 +271,7 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
         tableRow1.addView(label_date);
 
         TableRow tableRow = new TableRow(getContext());
-        TableRow.LayoutParams layoutParamsTableRow = new TableRow.LayoutParams(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 9);
+        TableRow.LayoutParams layoutParamsTableRow = new TableRow.LayoutParams(SCREEN_WIDTH / COLUMNS_PER_SCREEN, SCREEN_HEIGHT / ROWS_PER_SCREEN);
         tableRow.setPadding(0, 0, 0, 0);
         tableRow.setLayoutParams(layoutParamsTableRow);
         tableRow.addView(tableRow1);
@@ -289,24 +281,23 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
 
     private synchronized void initializeRowForTableD(int pos) {
         TableRow tableRowB = new TableRow(getContext());
-        TableRow.LayoutParams layoutParamsTableRow = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, SCREEN_HEIGHT / 9);
+        TableRow.LayoutParams layoutParamsTableRow = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, SCREEN_HEIGHT / ROWS_PER_SCREEN);
         tableRowB.setPadding(0, 0, 0, 0);
         tableRowB.setLayoutParams(layoutParamsTableRow);
         this.tableLayoutD.addView(tableRowB, pos);
     }
 
-    private Spinner recyclableSpinner;
     private synchronized void addColumnToTableAtD(final int rowPos, int grade) {
         TableRow tableRowAdd = (TableRow) this.tableLayoutD.getChildAt(rowPos);
         tableRow = new TableRow(getContext());
-        TableRow.LayoutParams layoutParamsTableRow = new TableRow.LayoutParams(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 9);
+        TableRow.LayoutParams layoutParamsTableRow = new TableRow.LayoutParams(SCREEN_WIDTH / COLUMNS_PER_SCREEN, SCREEN_HEIGHT / ROWS_PER_SCREEN);
         tableRow.setPadding(3, 3, 3, 4);
         tableRow.setBackground(getResources().getDrawable(R.drawable.border));
         tableRow.setLayoutParams(layoutParamsTableRow);
 
         Integer[] grades = ArrayUtils.toWrapperArray(getResources().getIntArray(R.array.grades));
         SpinnerAdapter adapter = new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, grades);
-        recyclableSpinner = new Spinner(getContext());
+        Spinner recyclableSpinner = new Spinner(getContext());
         recyclableSpinner.setAdapter(adapter);
         recyclableSpinner.setSelection(grade);
         tableRow.setTag(recyclableSpinner);
@@ -315,42 +306,21 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
         tableRowAdd.addView(tableRow);
     }
 
-    private void createCompleteColumn(String value) {
-        int i = 0;
-        int j = tableRowCountC - 1;
-        for (int k = i; k <= j; k++) {
-            //addColumnToTableAtD(k, value);
-        }
-    }
-
-    private void createCompleteRow(String value) {
-        initializeRowForTableD(0);
-        int i = 0;
-        int j = tableColumnCountB - 1;
-        int pos = tableRowCountC - 1;
-        for (int k = i; k <= j; k++) {
-            //addColumnToTableAtD(pos, value);
-        }
-    }
-
     @Override
     public void onScrollChanged(HorizontalScroll scrollView, int x, int y, int oldx, int oldy) {
-        if(scrollView == horizontalScrollViewB){
-            horizontalScrollViewD.scrollTo(x,y);
-        }
-        else if(scrollView == horizontalScrollViewD){
+        if (scrollView == horizontalScrollViewB) {
+            horizontalScrollViewD.scrollTo(x, y);
+        } else if (scrollView == horizontalScrollViewD) {
             horizontalScrollViewB.scrollTo(x, y);
         }
-
     }
 
     @Override
     public void onScrollChanged(VerticalScroll scrollView, int x, int y, int oldx, int oldy) {
-        if(scrollView == scrollViewC){
-            scrollViewD.scrollTo(x,y);
-        }
-        else if(scrollView == scrollViewD){
-            scrollViewC.scrollTo(x,y);
+        if (scrollView == scrollViewC) {
+            scrollViewD.scrollTo(x, y);
+        } else if (scrollView == scrollViewD) {
+            scrollViewC.scrollTo(x, y);
         }
     }
 
@@ -362,17 +332,22 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_add_students) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_add_students:
+                Navigation.findNavController(getActivity(),R.id.nav_host_fragment).navigate(R.id.action_nav_single_group_to_nav_add_student);
+                return true;
+            case R.id.action_add_task:
+                showAddDialog();
+                return true;
+            case R.id.action_export:
+                //export
+                return true;
+            case R.id.action_save:
+                //save
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     private void showAddDialog() {

@@ -12,6 +12,7 @@ import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 public class Utils {
 
@@ -32,10 +33,10 @@ public class Utils {
 
             int size = is.available();
             byte[] buffer = new byte[size];
-            is.read(buffer);
+            int v = is.read(buffer);
             is.close();
 
-            jsonString = new String(buffer, "UTF-8");
+            jsonString = new String(buffer, StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -43,16 +44,5 @@ public class Utils {
         return jsonString;
     }
 
-//    public static int getStringWidth(String str) {
-//        Paint paint = new Paint();
-//        paint.setTextSize(15);
-//        Typeface typeface = Typeface.create(Typeface.DEFAULT, Typeface.NORMAL);
-//        paint.setTypeface(typeface);
-//        paint.setColor(Color.BLACK);
-//        paint.setStyle(Paint.Style.FILL);
-//        Rect result = new Rect();
-//        paint.getTextBounds(str, 0, str.length(), result);
-//
-//        return result.width();
-//    }
+
 }
