@@ -35,13 +35,15 @@
          "name":"OOP_2020",
          "task":[
             "Testas",
-            "Egzaminas"
+            "Egzaminas",
+            "Kontrolinis"
          ],
          "students":[
             {
                "code":"s0125",
                "fullName":"Laimonas Dabuzinskas",
                "grades":[
+                  10,
                   10,
                   10
                ]
@@ -50,6 +52,7 @@
                "code":"s0126",
                "fullName":"Stud3 Stud3",
                "grades":[
+                  10,
                   10,
                   10
                ]
