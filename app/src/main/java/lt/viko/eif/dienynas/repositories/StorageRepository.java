@@ -2,8 +2,6 @@ package lt.viko.eif.dienynas.repositories;
 
 import android.util.Log;
 
-import com.google.gson.Gson;
-
 import lt.viko.eif.dienynas.models.Destytojas;
 import lt.viko.eif.dienynas.utils.App;
 import lt.viko.eif.dienynas.utils.Utils;
@@ -19,11 +17,9 @@ public class StorageRepository {
     }
 
     public Destytojas getDestytojas() {
-
-        Gson gson = new Gson();
         String jsonFileString = Utils.getJsonFromAssets(App.getContext(), "db.json");
         Log.i("data", jsonFileString);
-        Destytojas dest = gson.fromJson(jsonFileString, Destytojas.class);
+        Destytojas dest = Utils.getGsonParser().fromJson(jsonFileString, Destytojas.class);
         return dest;
     }
 }

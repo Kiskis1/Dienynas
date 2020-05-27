@@ -19,8 +19,7 @@
     <!--MAIN FRAGMENT-->
     <string name="main_explanation">TODO: Explanation \n TEST</string>
     <string name="text_type_student_id">Type your student ID:</string>
-    <string name="button_search_by_id">Search</string>
-    <string name="sample_student_code">012345</string>
+    <string name="main_search">Search</string>
     <string name="start_of_student_code">S</string>
 
     <!-- ITEM GROUP RECYCLER VIEW -->
@@ -29,20 +28,32 @@
     <!-- GROUP CREATING FRAGMENT-->
     <string name="creating_group_name">Enter group name:</string>
     <string name="creating_group_task">Enter a task:</string>
-    <string name="creating_create">Create</string>
     <string name="creating_group_name_hint">Group name</string>
     <string name="creating_group_task_hint">Group task</string>
+    <string name="creating_create">Create</string>
+    <string name="creating_create_group">Create group</string>
 
     <!-- STUDENT ADDING FRAGMENT -->
     <string name="adding_enter_student_code">Enter student code</string>
     <string name="adding_enter_student_full_name">Enter student full name</string>
+    <string name="adding_add_students">Add students</string>
     <string name="adding_import_msg">Press button to select file from which to import students</string>
     <string name="adding_select">Select</string>
 
+    <!--ADD TASK DIALOG-->
+    <string name="dialog_enter_task_name">Enter task name</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_submit">Submit</string>
+
     <!-- SAMPLES -->
-    <string name="sample_full_student_code">s012345</string>
     <string name="sample_full_name">Name Surname</string>
+    <string name="sample_full_student_code">s012345</string>
+    <string name="sample_student_code">012345</string>
+    <string name="sample_exam_text">Exam</string>
 
     <!-- CONTENT DESCRIPTORS-->
     <string name="content_description_group_logo">Group logo</string>
+    <string name="single_group_name">Group name</string>
+    <!-- TODO -->
+
 </resources>

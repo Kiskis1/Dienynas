@@ -23,33 +23,30 @@
         <action
             android:id="@+id/action_nav_groups_to_createGroupFragment"
             app:destination="@id/nav_create_group" />
+        <action
+            android:id="@+id/action_nav_groups_to_nav_single_group"
+            app:destination="@id/nav_single_group" />
     </fragment>
     <fragment
         android:id="@+id/nav_create_group"
         android:name="lt.viko.eif.dienynas.fragments.CreateGroupFragment"
-        android:label="fragment_create_group"
+        android:label="@string/creating_create_group"
         tools:layout="@layout/fragment_create_group" />
     <fragment
         android:id="@+id/nav_single_group"
         android:name="lt.viko.eif.dienynas.fragments.SingleGroupFragment"
-        android:label="fragment_single_group"
         tools:layout="@layout/fragment_single_group" >
         <action
             android:id="@+id/action_nav_single_group_to_nav_add_student"
             app:destination="@id/nav_add_student" />
-        <action
-            android:id="@+id/action_nav_single_group_to_addTaskFragment"
-            app:destination="@id/nav_add_task" />
+        <argument
+            android:name="group"
+            app:argType="string"/>
     </fragment>
     <fragment
         android:id="@+id/nav_add_student"
         android:name="lt.viko.eif.dienynas.fragments.AddStudentFragment"
-        android:label="fragment_add_student"
+        android:label="@string/adding_add_students"
         tools:layout="@layout/fragment_add_student" />
-    <fragment
-        android:id="@+id/nav_add_task"
-        android:name="lt.viko.eif.dienynas.fragments.AddTaskFragment"
-        android:label="fragment_add_task"
-        tools:layout="@layout/fragment_add_task" />
 
 </navigation>

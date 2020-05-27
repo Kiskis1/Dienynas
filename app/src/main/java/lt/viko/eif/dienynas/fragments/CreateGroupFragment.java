@@ -15,6 +15,7 @@ import lt.viko.eif.dienynas.R;
  * A simple {@link Fragment} subclass.
  */
 public class CreateGroupFragment extends Fragment {
+    private final static String TAG = CreateGroupFragment.class.getSimpleName();
 
     public CreateGroupFragment() {
         // Required empty public constructor

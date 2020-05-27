@@ -40,6 +40,19 @@ public class Student {
         this.grades = grades;
     }
 
+    public String getCodeFullName(){
+        return getCode() + "\n" + getFirstName() + "\n" + getLastName();
+    }
+
+    public String getFirstName(){
+        String[] s = getFullName().split(" ");
+        return s[0];
+    }
+
+    public String getLastName(){
+        String[] s = getFullName().split(" ");
+        return s[1];
+    }
     @Override
     public String toString() {
         return "Student{" +

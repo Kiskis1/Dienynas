@@ -3,16 +3,17 @@ package lt.viko.eif.dienynas;
 import android.os.Bundle;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.gson.Gson;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import lt.viko.eif.dienynas.dialogs.AddTaskDialog;
 import lt.viko.eif.dienynas.utils.App;
 
 
@@ -47,6 +48,5 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
 
 }

@@ -15,6 +15,7 @@ import lt.viko.eif.dienynas.R;
  * A simple {@link Fragment} subclass.
  */
 public class AddStudentFragment extends Fragment {
+    private final static String TAG = AddStudentFragment.class.getSimpleName();
 
     public AddStudentFragment() {
         // Required empty public constructor

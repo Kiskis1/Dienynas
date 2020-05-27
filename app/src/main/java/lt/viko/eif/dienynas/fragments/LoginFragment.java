@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import lt.viko.eif.dienynas.R;
  * A simple {@link Fragment} subclass.
  */
 public class LoginFragment extends Fragment {
+    private final static String TAG = LoginFragment.class.getSimpleName();
 
     public LoginFragment() {
         // Required empty public constructor

@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import lt.viko.eif.dienynas.R;
 
 public class MainFragment extends Fragment {
+    private final static String TAG = MainFragment.class.getSimpleName();
 
     @Override
     public View onCreateView(

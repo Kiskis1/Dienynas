@@ -4,21 +4,23 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="15dp">
-<!--TODO: FIX DIALOG-->
+    <!--TODO: STYLE DIALOG-->
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Enter your Message"
+        android:text="@string/dialog_enter_task_name"
         android:textAlignment="center"
         android:textSize="22sp" />
 
     <EditText
-        android:id="@+id/txt_input"
+        android:id="@+id/dialog_edit_task"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:hint="Enter your Message"
+        android:hint="@string/sample_exam_text"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
         android:textSize="20sp" />
 
     <LinearLayout
@@ -27,22 +29,22 @@
         android:layout_marginTop="15dp">
 
         <Button
-            android:id="@+id/btn_cancel"
-            android:layout_width="match_parent"
+            android:id="@+id/dialog_button_cancel"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/colorPrimary"
-            android:text="Cancel"
+            android:text="@string/dialog_cancel"
             android:textColor="#ffffff"
             android:textSize="18sp" />
 
         <Button
-            android:id="@+id/btn_okay"
-            android:layout_width="match_parent"
+            android:id="@+id/dialog_button_okay"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/colorPrimary"
-            android:text="Okay"
+            android:text="@string/dialog_submit"
             android:textColor="#ffffff"
             android:textSize="18sp" />
     </LinearLayout>

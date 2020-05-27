@@ -1,5 +1,6 @@
 package lt.viko.eif.dienynas.adapters;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +24,17 @@ import lt.viko.eif.dienynas.utils.App;
 
 public class GroupAdapter
         extends ListAdapter<Group, GroupAdapter.GroupViewHolder> {
+
+
+    public interface OnItemCLickListener{
+        void OnItemClick(Group group);
+    }
+
+    private OnItemCLickListener mOnItemCLickListener;
+
+    public void setOnItemCLickListener(OnItemCLickListener onItemCLickListener) {
+        this.mOnItemCLickListener = onItemCLickListener;
+    }
 
     private Interaction interaction;
 
@@ -64,6 +77,10 @@ public class GroupAdapter
             if (getAdapterPosition() == RecyclerView.NO_POSITION) return;
             Group clicked = getItem(getAdapterPosition());
             Log.i("clicked", clicked.toString());
+
+
+            mOnItemCLickListener.OnItemClick(clicked);
+
             switch (v.getId()) {
                 //TODO handle clicks
                 default:
@@ -80,6 +97,7 @@ public class GroupAdapter
 
     public interface Interaction {
     }
+
 
     private static class GroupDC extends DiffUtil.ItemCallback<Group> {
         @Override
