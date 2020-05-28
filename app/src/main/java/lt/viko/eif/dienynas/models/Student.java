@@ -1,5 +1,9 @@
 package lt.viko.eif.dienynas.models;
 
+import androidx.annotation.NonNull;
+
+import com.google.firebase.firestore.Exclude;
+
 import java.util.List;
 
 public class Student {
@@ -40,19 +44,23 @@ public class Student {
         this.grades = grades;
     }
 
+    @Exclude
     public String getCodeFullName(){
         return getCode() + "\n" + getFirstName() + "\n" + getLastName();
     }
 
+    @Exclude
     public String getFirstName(){
         String[] s = getFullName().split(" ");
         return s[0];
     }
 
+    @Exclude
     public String getLastName(){
         String[] s = getFullName().split(" ");
         return s[1];
     }
+    @NonNull
     @Override
     public String toString() {
         return "Student{" +

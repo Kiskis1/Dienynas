@@ -1,4 +1,4 @@
-package lt.viko.eif.dienynas;
+package lt.viko.eif.dienynas.utils;
 
 import android.content.Context;
 import android.util.AttributeSet;

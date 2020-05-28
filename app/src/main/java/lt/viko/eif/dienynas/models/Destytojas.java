@@ -1,9 +1,11 @@
 package lt.viko.eif.dienynas.models;
 
+import androidx.annotation.NonNull;
+
 import java.util.List;
 
 public class Destytojas {
-    private String id;
+    private int id;
     private String firstName;
     private String lastName;
     private String email;
@@ -12,7 +14,7 @@ public class Destytojas {
     public Destytojas() {
     }
 
-    public Destytojas(String id, String firstName, String lastName, String email, List<Group> group) {
+    public Destytojas(int id, String firstName, String lastName, String email, List<Group> group) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -20,11 +22,11 @@ public class Destytojas {
         this.group = group;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -60,6 +62,7 @@ public class Destytojas {
         this.group = group;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Destytojas{" +

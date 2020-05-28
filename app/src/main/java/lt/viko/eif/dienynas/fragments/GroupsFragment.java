@@ -3,11 +3,8 @@ package lt.viko.eif.dienynas.fragments;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,16 +14,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import lt.viko.eif.dienynas.repositories.StorageRepository;
+import lt.viko.eif.dienynas.utils.ApplicationData;
 import lt.viko.eif.dienynas.R;
 import lt.viko.eif.dienynas.adapters.GroupAdapter;
 import lt.viko.eif.dienynas.adapters.GroupAdapter.Interaction;
 import lt.viko.eif.dienynas.models.Group;
-import lt.viko.eif.dienynas.repositories.StorageRepository;
 import lt.viko.eif.dienynas.utils.Utils;
 
 public class GroupsFragment extends Fragment implements Interaction {
@@ -69,7 +65,9 @@ public class GroupsFragment extends Fragment implements Interaction {
 
         mRecyclerView.setAdapter(mGroupAdapter);
 
-        List<Group> list = StorageRepository.getInstance().getDestytojas().getGroup();
+//        List<Group> list = StorageRepository.getInstance().getDest().getGroup();
+
+        List<Group> list = ApplicationData.getDestytojas().getGroup();
         mGroupAdapter.submitList(list);
 
         mGroupAdapter.setOnItemCLickListener(new GroupAdapter.OnItemCLickListener() {

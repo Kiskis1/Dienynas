@@ -7,17 +7,19 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import lt.viko.eif.dienynas.dialogs.AddTaskDialog;
+import lt.viko.eif.dienynas.models.Destytojas;
+import lt.viko.eif.dienynas.repositories.StorageRepository;
 import lt.viko.eif.dienynas.utils.App;
+import lt.viko.eif.dienynas.utils.Utils;
 
 
 public class MainActivity extends AppCompatActivity {
+    private final static String TAG = MainActivity.class.getSimpleName();
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -28,6 +30,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+//        String jsonFileString = Utils.getJsonFromAssets(App.getContext(), "db.json");
+//        Destytojas dest = Utils.getGsonParser().fromJson(jsonFileString, Destytojas.class);
+//        StorageRepository.getInstance().setData(dest);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);

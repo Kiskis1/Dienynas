@@ -1,9 +1,11 @@
 package lt.viko.eif.dienynas.models;
 
+import androidx.annotation.NonNull;
+
 import java.util.List;
 
 public class Group {
-    private String id;
+    private long id;
     private String name;
     private List<String> task;
     private List<Student> students;
@@ -11,18 +13,18 @@ public class Group {
     public Group() {
     }
 
-    public Group(String id, String name, List<String> task, List<Student> students) {
+    public Group(long id, String name, List<String> task, List<Student> students) {
         this.id = id;
         this.name = name;
         this.task = task;
         this.students = students;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -50,6 +52,7 @@ public class Group {
         this.students = students;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Group{" +

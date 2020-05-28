@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
+import lt.viko.eif.dienynas.models.Destytojas;
+import lt.viko.eif.dienynas.models.Group;
+
 public class Utils {
 
     private static Gson gson;
@@ -43,6 +46,4 @@ public class Utils {
         }
         return jsonString;
     }
-
-
 }

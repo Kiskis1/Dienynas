@@ -6,8 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.navigation.NavOptions;
-import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.Gravity;
@@ -27,9 +25,9 @@ import android.widget.TextView;
 
 import com.google.android.gms.common.util.ArrayUtils;
 
-import lt.viko.eif.dienynas.HorizontalScroll;
+import lt.viko.eif.dienynas.utils.HorizontalScroll;
 import lt.viko.eif.dienynas.R;
-import lt.viko.eif.dienynas.VerticalScroll;
+import lt.viko.eif.dienynas.utils.VerticalScroll;
 import lt.viko.eif.dienynas.dialogs.AddStudentDialog;
 import lt.viko.eif.dienynas.dialogs.AddTaskDialog;
 import lt.viko.eif.dienynas.models.Group;
@@ -81,7 +79,7 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
         setHasOptionsMenu(true);
         //Log.i(TAG, getArguments().getString("group"));
         assert getArguments() != null;
-            group = Utils.getGsonParser().fromJson(getArguments().getString("group"), Group.class);
+        group = Utils.getGsonParser().fromJson(getArguments().getString("group"), Group.class);
 
     }
 
@@ -356,13 +354,15 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
 
     private void showAddTaskDialog() {
         FragmentManager fm = getActivity().getSupportFragmentManager();
-        AddTaskDialog addTaskDialog = new AddTaskDialog();
-        addTaskDialog.show(fm, "dialog");
+        Log.i(TAG, "showAddTaskDialog: " + group.getId());
+        AddTaskDialog addTaskDialog = AddTaskDialog.newInstance(group.getId());
+        addTaskDialog.show(fm, "task");
     }
+
     private void showAddStudentDialog() {
         FragmentManager fm = getActivity().getSupportFragmentManager();
-        AddStudentDialog addStudentDialog = new AddStudentDialog();
-        addStudentDialog.show(fm, "dialog");
+        AddStudentDialog addStudentDialog = AddStudentDialog.newInstance(group.getId());
+        addStudentDialog.show(fm, "student");
     }
 
 

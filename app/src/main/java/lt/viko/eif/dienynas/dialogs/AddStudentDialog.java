@@ -1,6 +1,8 @@
 package lt.viko.eif.dienynas.dialogs;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,57 +10,97 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import lt.viko.eif.dienynas.R;
+import lt.viko.eif.dienynas.models.Destytojas;
+import lt.viko.eif.dienynas.models.Group;
+import lt.viko.eif.dienynas.models.Student;
+import lt.viko.eif.dienynas.utils.ApplicationData;
+import lt.viko.eif.dienynas.viewmodels.DestytojasViewModel;
 
 //https://guides.codepath.com/android/using-dialogfragment
 public class AddStudentDialog extends DialogFragment implements View.OnClickListener {
     private final static String TAG = AddStudentDialog.class.getSimpleName();
 
-    private EditText mEditText;
-    private Button mCancel;
-    private Button mSubmit;
+    private EditText mStudCode;
+    private EditText mFullName;
+    private Button mAdd;
+    private Button mBulkAdd;
+    private DestytojasViewModel destytojasViewModel;
+    private List<Integer> grades = new ArrayList<>();
+
+    private long id;
 
     public AddStudentDialog() {
     }
 
+    public static AddStudentDialog newInstance(long id) {
+
+        Bundle args = new Bundle();
+        args.putLong("groupid", id);
+        AddStudentDialog fragment = new AddStudentDialog();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        assert getArguments() != null;
+        id = getArguments().getLong("groupid") - 1;
         this.setCancelable(true);
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.dialog_add_student, container);
-//        mEditText = v.findViewById(R.id.dialog_edit_task);
-//        //get edittext content
-//
-//        mCancel = v.findViewById(R.id.dialog_button_cancel);
-//        mSubmit = v.findViewById(R.id.dialog_button_okay);
-//
-//        mCancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(getContext(), "CANCEL", Toast.LENGTH_SHORT).show();
-//                dismiss();
-//            }
-//        });
-//
-//        mSubmit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(getContext(), "SUBMIT", Toast.LENGTH_SHORT).show();
-//                dismiss();
-//            }
-//        });
-
-        return v;
+        return inflater.inflate(R.layout.dialog_add_student, container);
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        destytojasViewModel = new ViewModelProvider(this).get(DestytojasViewModel.class);
+
+        mStudCode = view.findViewById(R.id.edit_student_code);
+        mFullName = view.findViewById(R.id.edit_student_full_name);
+        mAdd = view.findViewById(R.id.button_add_student);
+        mBulkAdd = view.findViewById(R.id.button_import);
+
+        mAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Destytojas dest = ApplicationData.getDestytojas();
+                int size = dest.getGroup().get((int) id).getTask().size();
+                for (int i=0; i<size; i++){
+                    grades.add(0);
+                }
+                Student stud = new Student(mStudCode.getText().toString(), mFullName.getText().toString(), grades);
+                Log.i(TAG, stud.toString());
+                Log.i(TAG, "ONCLICK" + id);
+                dest.getGroup().get((int) id).getStudents().add(stud);
+                destytojasViewModel.setDest(dest);
+                dismiss();
+            }
+        });
+
+        mBulkAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
+    }
+
 
     @Override
     public void onClick(View view) {
