@@ -36,17 +36,9 @@
         android:id="@+id/nav_single_group"
         android:name="lt.viko.eif.dienynas.fragments.SingleGroupFragment"
         tools:layout="@layout/fragment_single_group" >
-        <action
-            android:id="@+id/action_nav_single_group_to_nav_add_student"
-            app:destination="@id/nav_add_student" />
         <argument
             android:name="group"
             app:argType="string"/>
     </fragment>
-    <fragment
-        android:id="@+id/nav_add_student"
-        android:name="lt.viko.eif.dienynas.fragments.AddStudentFragment"
-        android:label="@string/adding_add_students"
-        tools:layout="@layout/fragment_add_student" />
 
 </navigation>

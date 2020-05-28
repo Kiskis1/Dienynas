@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -29,6 +30,7 @@ import com.google.android.gms.common.util.ArrayUtils;
 import lt.viko.eif.dienynas.HorizontalScroll;
 import lt.viko.eif.dienynas.R;
 import lt.viko.eif.dienynas.VerticalScroll;
+import lt.viko.eif.dienynas.dialogs.AddStudentDialog;
 import lt.viko.eif.dienynas.dialogs.AddTaskDialog;
 import lt.viko.eif.dienynas.models.Group;
 import lt.viko.eif.dienynas.models.Student;
@@ -79,8 +81,10 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
         setHasOptionsMenu(true);
         //Log.i(TAG, getArguments().getString("group"));
         assert getArguments() != null;
-        group = Utils.getGsonParser().fromJson(getArguments().getString("group"), Group.class);
+            group = Utils.getGsonParser().fromJson(getArguments().getString("group"), Group.class);
+
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -334,10 +338,10 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add_students:
-                Navigation.findNavController(getActivity(),R.id.nav_host_fragment).navigate(R.id.action_nav_single_group_to_nav_add_student);
+                showAddStudentDialog();
                 return true;
             case R.id.action_add_task:
-                showAddDialog();
+                showAddTaskDialog();
                 return true;
             case R.id.action_export:
                 //export
@@ -350,10 +354,15 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
         }
     }
 
-    private void showAddDialog() {
+    private void showAddTaskDialog() {
         FragmentManager fm = getActivity().getSupportFragmentManager();
         AddTaskDialog addTaskDialog = new AddTaskDialog();
         addTaskDialog.show(fm, "dialog");
+    }
+    private void showAddStudentDialog() {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        AddStudentDialog addStudentDialog = new AddStudentDialog();
+        addStudentDialog.show(fm, "dialog");
     }
 
 

@@ -39,6 +39,7 @@
     <string name="adding_add_students">Add students</string>
     <string name="adding_import_msg">Press button to select file from which to import students</string>
     <string name="adding_select">Select</string>
+    <string name="adding_add">Add</string>
 
     <!--ADD TASK DIALOG-->
     <string name="dialog_enter_task_name">Enter task name</string>
