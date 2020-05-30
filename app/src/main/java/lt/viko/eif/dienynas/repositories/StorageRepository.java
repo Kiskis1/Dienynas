@@ -71,15 +71,4 @@ public class StorageRepository {
                 .set(dest);
     }
 
-    public void addStudent(Student stud) {
-        db.collection("dest")
-                .document("0xMxDmsl6maRFdBYhJ9T")
-                .update("group", FieldPath.documentId())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.i(TAG, "onSuccess: add student success ASDSDGARaftRAGDFrwqsfgASGFNRWasgftAMFTesgfsatsgdmftewADHTEWAHDGTEWGF");
-                    }
-                });
-    }
 }

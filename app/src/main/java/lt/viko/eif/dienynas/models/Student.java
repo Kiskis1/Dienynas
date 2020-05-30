@@ -60,6 +60,13 @@ public class Student {
         String[] s = getFullName().split(" ");
         return s[1];
     }
+
+    @Exclude
+    public void setStudentByCodeFullName(String full){
+        String[] s = full.split("\n");
+        this.code = s[0];
+        this.fullName = s[1] + " " + s[2];
+    }
     @NonNull
     @Override
     public String toString() {

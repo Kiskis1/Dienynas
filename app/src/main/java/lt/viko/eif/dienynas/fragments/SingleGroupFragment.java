@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.Gravity;
@@ -25,6 +26,9 @@ import android.widget.TextView;
 
 import com.google.android.gms.common.util.ArrayUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lt.viko.eif.dienynas.utils.HorizontalScroll;
 import lt.viko.eif.dienynas.R;
 import lt.viko.eif.dienynas.utils.VerticalScroll;
@@ -33,6 +37,7 @@ import lt.viko.eif.dienynas.dialogs.AddTaskDialog;
 import lt.viko.eif.dienynas.models.Group;
 import lt.viko.eif.dienynas.models.Student;
 import lt.viko.eif.dienynas.utils.Utils;
+import lt.viko.eif.dienynas.viewmodels.DestytojasViewModel;
 
 //        https://github.com/shabyWoks/DynamicTableLayout/blob/master/app/src/main/java/com/shaby/dynamictablelayout/MainActivity.java
 //TODO: SET TITLE TO GROUP NAME
@@ -70,6 +75,8 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
     private final int COLUMNS_PER_SCREEN = 3;
     private final int ROWS_PER_SCREEN = 9;
 
+    private DestytojasViewModel destytojasViewModel;
+
     public SingleGroupFragment() {
     }
 
@@ -89,6 +96,8 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_single_group, container, false);
 
+
+        destytojasViewModel = new ViewModelProvider(this).get(DestytojasViewModel.class);
         relativeLayoutMain = root.findViewById(R.id.relativeLayoutMain);
         getScreenDimension();
         initializeRelativeLayout();
@@ -114,24 +123,37 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
             }
             i++;
         }
-        getInfo();
+
         return root;
     }
 
-    private void getInfo() {
+    private void saveGrades() {
+        Group update = new Group();
+        update.setId(group.getId());
+        update.setName(group.getName());
+        update.setTask(group.getTask());
+        List<Student> students = new ArrayList<>();
         for (int i = 0; i < tableRowCountC; i++) {
             TableRow row = (TableRow) tableLayoutC.getChildAt(i);
             TableRow row2 = (TableRow) row.getChildAt(0);
             TextView view = (TextView) row2.getChildAt(0);
-            Log.i(TAG, view.getText().toString());
+            Student student = new Student();
+            student.setStudentByCodeFullName(view.getText().toString());
+//            Log.i(TAG, "saveGrades: "+ student.toString());
+            List<Integer> grades = new ArrayList<>();
             for (int j = 0; j < tableColumnCountB; j++) {
                 TableRow row3 = (TableRow) tableLayoutD.getChildAt(i);
                 TableRow row4 = (TableRow) row3.getChildAt(j);
                 Spinner spin = (Spinner) row4.getChildAt(0);
-                Log.i(TAG, spin.getSelectedItem().toString());
+                grades.add(Integer.valueOf(spin.getSelectedItem().toString()));
+//                Log.i(TAG, "saveGrades: " + grades.toString());
             }
-            Log.i(TAG, "SPACE");
+            student.setGrades(grades);
+            students.add(student);
+//            Log.i(TAG, "saveGrades: "+students.toString());
         }
+        update.setStudents(students);
+        destytojasViewModel.saveGrades(update);
     }
 
     private void getScreenDimension() {
@@ -341,11 +363,11 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
             case R.id.action_add_task:
                 showAddTaskDialog();
                 return true;
+            case R.id.action_save:
+                saveGrades();
+                return true;
             case R.id.action_export:
                 //export
-                return true;
-            case R.id.action_save:
-                //save
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

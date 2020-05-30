@@ -96,6 +96,7 @@ public class AddStudentDialog extends DialogFragment implements View.OnClickList
         mBulkAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 dismiss();
             }
         });

@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import lt.viko.eif.dienynas.R;
 import lt.viko.eif.dienynas.models.Destytojas;
+import lt.viko.eif.dienynas.models.Student;
 import lt.viko.eif.dienynas.utils.ApplicationData;
 import lt.viko.eif.dienynas.viewmodels.DestytojasViewModel;
 
@@ -68,6 +69,8 @@ public class AddTaskDialog extends DialogFragment implements View.OnClickListene
             @Override
             public void onClick(View view) {
                 Destytojas dest = ApplicationData.getDestytojas();
+                for(Student stud : dest.getGroup().get((int)id).getStudents())
+                    stud.getGrades().add(0);
                 dest.getGroup().get((int) id).getTask().add(mEditText.getText().toString());
                 destytojasViewModel.setDest(dest);
                 Toast.makeText(getContext(), "SUBMIT", Toast.LENGTH_SHORT).show();
