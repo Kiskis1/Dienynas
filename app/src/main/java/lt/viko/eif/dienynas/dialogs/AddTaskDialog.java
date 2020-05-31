@@ -24,8 +24,6 @@ public class AddTaskDialog extends DialogFragment implements View.OnClickListene
     private final static String TAG = AddTaskDialog.class.getSimpleName();
 
     private EditText mEditText;
-    private Button mCancel;
-    private Button mSubmit;
     private DestytojasViewModel destytojasViewModel;
     private long id;
 
@@ -62,8 +60,8 @@ public class AddTaskDialog extends DialogFragment implements View.OnClickListene
 
         destytojasViewModel = new ViewModelProvider(this).get(DestytojasViewModel.class);
         mEditText = view.findViewById(R.id.dialog_edit_task);
-        mCancel = view.findViewById(R.id.dialog_button_cancel);
-        mSubmit = view.findViewById(R.id.dialog_button_okay);
+        Button mCancel = view.findViewById(R.id.dialog_button_cancel);
+        Button mSubmit = view.findViewById(R.id.dialog_button_okay);
 
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override

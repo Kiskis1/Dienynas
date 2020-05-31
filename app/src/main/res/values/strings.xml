@@ -33,18 +33,21 @@
     <string name="creating_create">Create</string>
     <string name="creating_create_group">Create group</string>
 
-    <!-- STUDENT ADDING FRAGMENT -->
+    <!-- ADD STUDENT DIALOG -->
     <string name="adding_enter_student_code">Enter student code</string>
     <string name="adding_enter_student_full_name">Enter student full name</string>
-    <string name="adding_add_students">Add students</string>
     <string name="adding_import_msg">Press button to select file from which to import students</string>
     <string name="adding_select">Select</string>
     <string name="adding_add">Add</string>
 
-    <!--ADD TASK DIALOG-->
+    <!-- ADD TASK DIALOG -->
     <string name="dialog_enter_task_name">Enter task name</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_submit">Submit</string>
+
+    <!-- SINGLE GROUP FRAGMENT -->
+    <string name="single_export_success">Exported successfully</string>
+    <string name="single_export_fail">Export failed</string>
 
     <!-- SAMPLES -->
     <string name="sample_full_name">Name Surname</string>

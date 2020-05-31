@@ -23,7 +23,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginBottom="16dp"
         android:text="@string/text_type_student_id"
-        app:layout_constraintBottom_toTopOf="@+id/editText"
+        app:layout_constraintBottom_toTopOf="@+id/main_edit_code"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -37,7 +37,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/main_edit_code"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
@@ -57,5 +57,5 @@
         android:layout_marginBottom="76dp"
         android:text="@string/start_of_student_code"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/editText" />
+        app:layout_constraintEnd_toStartOf="@+id/main_edit_code" />
 </androidx.constraintlayout.widget.ConstraintLayout>

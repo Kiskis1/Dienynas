@@ -17,19 +17,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-import lt.viko.eif.dienynas.repositories.StorageRepository;
-import lt.viko.eif.dienynas.utils.ApplicationData;
 import lt.viko.eif.dienynas.R;
 import lt.viko.eif.dienynas.adapters.GroupAdapter;
 import lt.viko.eif.dienynas.adapters.GroupAdapter.Interaction;
 import lt.viko.eif.dienynas.models.Group;
+import lt.viko.eif.dienynas.utils.ApplicationData;
 import lt.viko.eif.dienynas.utils.Utils;
 
 public class GroupsFragment extends Fragment implements Interaction {
     private final static String TAG = GroupsFragment.class.getSimpleName();
-
-    private RecyclerView mRecyclerView;
-    private GroupAdapter mGroupAdapter;
 
 
     @Override
@@ -56,9 +52,9 @@ public class GroupsFragment extends Fragment implements Interaction {
             }
         });
 
-        mGroupAdapter = new GroupAdapter(this);
+        GroupAdapter mGroupAdapter = new GroupAdapter(this);
 
-        mRecyclerView = view.findViewById(R.id.recycler_group);
+        RecyclerView mRecyclerView = view.findViewById(R.id.recycler_group);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);

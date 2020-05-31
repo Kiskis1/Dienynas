@@ -1,11 +1,6 @@
 package lt.viko.eif.dienynas.utils;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.Typeface;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -13,9 +8,6 @@ import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-
-import lt.viko.eif.dienynas.models.Destytojas;
-import lt.viko.eif.dienynas.models.Group;
 
 public class Utils {
 
@@ -46,4 +38,5 @@ public class Utils {
         }
         return jsonString;
     }
+
 }

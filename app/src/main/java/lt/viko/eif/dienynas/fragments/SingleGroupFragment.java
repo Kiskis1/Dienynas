@@ -1,13 +1,6 @@
 package lt.viko.eif.dienynas.fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -23,20 +16,28 @@ import android.widget.SpinnerAdapter;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.common.util.ArrayUtils;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import lt.viko.eif.dienynas.utils.HorizontalScroll;
 import lt.viko.eif.dienynas.R;
-import lt.viko.eif.dienynas.utils.VerticalScroll;
 import lt.viko.eif.dienynas.dialogs.AddStudentDialog;
 import lt.viko.eif.dienynas.dialogs.AddTaskDialog;
 import lt.viko.eif.dienynas.models.Group;
 import lt.viko.eif.dienynas.models.Student;
+import lt.viko.eif.dienynas.utils.HorizontalScroll;
 import lt.viko.eif.dienynas.utils.Utils;
+import lt.viko.eif.dienynas.utils.VerticalScroll;
 import lt.viko.eif.dienynas.viewmodels.DestytojasViewModel;
 
 //        https://github.com/shabyWoks/DynamicTableLayout/blob/master/app/src/main/java/com/shaby/dynamictablelayout/MainActivity.java
@@ -111,7 +112,7 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
         initializeRowForTableB();
 
         for (String s : group.getTask()) {
-            addColumnsToTableB(s, 0);
+            addColumnsToTableB(s);
         }
 
         int i = 0;
@@ -201,15 +202,23 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
     private void initializeScrollers() {
         horizontalScrollViewB = new HorizontalScroll(getContext());
         horizontalScrollViewB.setPadding(0, 0, 0, 0);
+        horizontalScrollViewB.setHorizontalScrollBarEnabled(false);
+        horizontalScrollViewB.setVerticalScrollBarEnabled(false);
 
         horizontalScrollViewD = new HorizontalScroll(getContext());
         horizontalScrollViewD.setPadding(0, 0, 0, 0);
+        horizontalScrollViewD.setHorizontalScrollBarEnabled(false);
+        horizontalScrollViewD.setVerticalScrollBarEnabled(false);
 
         scrollViewC = new VerticalScroll(getContext());
         scrollViewC.setPadding(0, 0, 0, 0);
+        scrollViewC.setHorizontalScrollBarEnabled(false);
+        scrollViewC.setVerticalScrollBarEnabled(false);
 
         scrollViewD = new VerticalScroll(getContext());
         scrollViewD.setPadding(0, 0, 0, 0);
+        scrollViewD.setHorizontalScrollBarEnabled(false);
+        scrollViewD.setVerticalScrollBarEnabled(false);
 
         horizontalScrollViewB.setLayoutParams(new ViewGroup.LayoutParams(SCREEN_WIDTH - (SCREEN_WIDTH / COLUMNS_PER_SCREEN), SCREEN_HEIGHT / ROWS_PER_SCREEN));
         scrollViewC.setLayoutParams(new ViewGroup.LayoutParams(SCREEN_WIDTH / COLUMNS_PER_SCREEN, SCREEN_HEIGHT - (SCREEN_HEIGHT / ROWS_PER_SCREEN)));
@@ -271,7 +280,7 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
         this.tableLayoutB.addView(tableRowB);
     }
 
-    private synchronized void addColumnsToTableB(String text, final int id) {
+    private synchronized void addColumnsToTableB(String text) {
         tableRow = new TableRow(getContext());
         TableRow.LayoutParams layoutParamsTableRow = new TableRow.LayoutParams(SCREEN_WIDTH / COLUMNS_PER_SCREEN, SCREEN_HEIGHT / ROWS_PER_SCREEN);
         tableRow.setPadding(3, 3, 3, 4);
@@ -367,7 +376,13 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
                 saveGrades();
                 return true;
             case R.id.action_export:
-                //export
+                //destytojasViewModel.exportGroupToPDF(group);
+                if(destytojasViewModel.exportGroupToPdf(group)){
+                    Snackbar.make(getView(), R.string.single_export_success,Snackbar.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(getContext(), R.string.single_export_fail,Toast.LENGTH_LONG).show();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

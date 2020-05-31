@@ -1,17 +1,16 @@
 package lt.viko.eif.dienynas.fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,6 @@ import lt.viko.eif.dienynas.R;
 import lt.viko.eif.dienynas.models.Group;
 import lt.viko.eif.dienynas.models.Student;
 import lt.viko.eif.dienynas.utils.ApplicationData;
-import lt.viko.eif.dienynas.utils.Utils;
 import lt.viko.eif.dienynas.viewmodels.DestytojasViewModel;
 
 
@@ -32,7 +30,6 @@ public class CreateGroupFragment extends Fragment {
 
     private EditText mGroupName;
     private EditText mGroupTask;
-    private Button mCreate;
     private DestytojasViewModel destytojasViewModel;
     private List<String> task = new ArrayList<>();
     private List<Student> students = new ArrayList<>();
@@ -57,7 +54,7 @@ public class CreateGroupFragment extends Fragment {
 
         mGroupName = view.findViewById(R.id.edit_group_name);
         mGroupTask = view.findViewById(R.id.edit_group_task);
-        mCreate = view.findViewById(R.id.button_create_group);
+        Button mCreate = view.findViewById(R.id.button_create_group);
 
         mCreate.setOnClickListener(new View.OnClickListener() {
             @Override

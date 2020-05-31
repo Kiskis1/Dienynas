@@ -1,8 +1,6 @@
 package lt.viko.eif.dienynas.utils;
 
 import android.app.Application;
-import android.content.Context;
-import android.util.Log;
 
 import lt.viko.eif.dienynas.models.Destytojas;
 import lt.viko.eif.dienynas.models.Group;
@@ -12,6 +10,15 @@ import lt.viko.eif.dienynas.repositories.StorageRepository;
 public class ApplicationData extends Application {
     private final static String TAG = ApplicationData.class.getSimpleName();
     private static Destytojas destytojas;
+    private static long groupId;
+
+    public static long getGroupId() {
+        return groupId;
+    }
+
+    public static void setGroupId(long groupId) {
+        ApplicationData.groupId = groupId;
+    }
 
     public static Destytojas getDestytojas() {
         return destytojas;

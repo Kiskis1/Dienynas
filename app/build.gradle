@@ -23,6 +23,24 @@ android {
         }
     }
 
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude("META-INF/*.kotlin_module")
+        exclude 'com/itextpdf/io/font/cmap/HYGoThic-Medium.properties'
+        exclude 'com/itextpdf/io/font/cmap/MHei-Medium.properties'
+        exclude 'com/itextpdf/io/font/cmap/cjk_registry.properties'
+        exclude 'com/itextpdf/io/font/cmap/HYSMyeongJoStd-Medium.properties'
+        exclude 'com/itextpdf/io/font/cmap_info.txt'
+        exclude 'com/itextpdf/io/font/cmap/*'
+    }
+
 }
 
 dependencies {
@@ -36,7 +54,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:21.4.3'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'net.sourceforge.jexcelapi:jxl:2.6.12'
+
+    implementation 'com.itextpdf:itextpdf:5.0.6'
+
+    implementation 'in.gauriinfotech:commons:1.0.8'
+    implementation files('libs/poishadow-all.jar')
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'

@@ -1,26 +1,20 @@
 package lt.viko.eif.dienynas.adapters;
 
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
 import lt.viko.eif.dienynas.R;
 import lt.viko.eif.dienynas.models.Group;
-import lt.viko.eif.dienynas.utils.App;
 
 public class GroupAdapter
         extends ListAdapter<Group, GroupAdapter.GroupViewHolder> {
@@ -37,8 +31,6 @@ public class GroupAdapter
     }
 
     private Interaction interaction;
-
-    private TextView mGroupName;
 
     public GroupAdapter(Interaction interaction) {
         super(new GroupDC());
@@ -64,11 +56,8 @@ public class GroupAdapter
 
     public class GroupViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private final Interaction interaction;
-
         GroupViewHolder(View inflate, Interaction interaction) {
             super(inflate);
-            this.interaction = interaction;
             itemView.setOnClickListener(this);
         }
 
@@ -78,18 +67,12 @@ public class GroupAdapter
             Group clicked = getItem(getAdapterPosition());
             Log.i("clicked", clicked.toString());
 
-
             mOnItemCLickListener.OnItemClick(clicked);
-
-            switch (v.getId()) {
-                //TODO handle clicks
-                default:
-            }
         }
 
-        public void bind(Group item) {
+        void bind(Group item) {
             //TODO use itemView and set data
-            mGroupName = itemView.findViewById(R.id.text_group_name);
+            TextView mGroupName = itemView.findViewById(R.id.text_group_name);
 
             mGroupName.setText(item.getName());
         }

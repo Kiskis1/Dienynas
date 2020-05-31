@@ -1,26 +1,19 @@
 package lt.viko.eif.dienynas.repositories;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.SetOptions;
 
-import lt.viko.eif.dienynas.models.Student;
-import lt.viko.eif.dienynas.utils.ApplicationData;
 import lt.viko.eif.dienynas.models.Destytojas;
 import lt.viko.eif.dienynas.models.Group;
+import lt.viko.eif.dienynas.utils.ApplicationData;
 
 public class StorageRepository {
     private final static String TAG = StorageRepository.class.getSimpleName();
@@ -34,7 +27,7 @@ public class StorageRepository {
     private StorageRepository() {
     }
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Destytojas dest;
 
     public void getDest(){

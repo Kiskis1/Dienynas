@@ -20,7 +20,7 @@ public class Student {
         this.grades = grades;
     }
 
-    public String getCode() {
+    private String getCode() {
         return code;
     }
 
@@ -28,7 +28,7 @@ public class Student {
         this.code = code;
     }
 
-    public String getFullName() {
+    private String getFullName() {
         return fullName;
     }
 
@@ -50,13 +50,13 @@ public class Student {
     }
 
     @Exclude
-    public String getFirstName(){
+    private String getFirstName(){
         String[] s = getFullName().split(" ");
         return s[0];
     }
 
     @Exclude
-    public String getLastName(){
+    private String getLastName(){
         String[] s = getFullName().split(" ");
         return s[1];
     }

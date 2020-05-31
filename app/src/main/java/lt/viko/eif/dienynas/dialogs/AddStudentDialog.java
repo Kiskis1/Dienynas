@@ -1,6 +1,6 @@
 package lt.viko.eif.dienynas.dialogs;
 
-import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,7 +19,6 @@ import java.util.List;
 
 import lt.viko.eif.dienynas.R;
 import lt.viko.eif.dienynas.models.Destytojas;
-import lt.viko.eif.dienynas.models.Group;
 import lt.viko.eif.dienynas.models.Student;
 import lt.viko.eif.dienynas.utils.ApplicationData;
 import lt.viko.eif.dienynas.viewmodels.DestytojasViewModel;
@@ -29,12 +27,13 @@ import lt.viko.eif.dienynas.viewmodels.DestytojasViewModel;
 public class AddStudentDialog extends DialogFragment implements View.OnClickListener {
     private final static String TAG = AddStudentDialog.class.getSimpleName();
 
+    private static final int OPEN_REQUEST_CODE = 41;
+
     private EditText mStudCode;
     private EditText mFullName;
-    private Button mAdd;
-    private Button mBulkAdd;
     private DestytojasViewModel destytojasViewModel;
     private List<Integer> grades = new ArrayList<>();
+
 
     private long id;
 
@@ -73,15 +72,15 @@ public class AddStudentDialog extends DialogFragment implements View.OnClickList
 
         mStudCode = view.findViewById(R.id.edit_student_code);
         mFullName = view.findViewById(R.id.edit_student_full_name);
-        mAdd = view.findViewById(R.id.button_add_student);
-        mBulkAdd = view.findViewById(R.id.button_import);
+        Button mAdd = view.findViewById(R.id.button_add_student);
+        Button mBulkAdd = view.findViewById(R.id.button_import);
 
         mAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Destytojas dest = ApplicationData.getDestytojas();
                 int size = dest.getGroup().get((int) id).getTask().size();
-                for (int i=0; i<size; i++){
+                for (int i = 0; i < size; i++) {
                     grades.add(0);
                 }
                 Student stud = new Student(mStudCode.getText().toString(), mFullName.getText().toString(), grades);
@@ -96,7 +95,10 @@ public class AddStudentDialog extends DialogFragment implements View.OnClickList
         mBulkAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                intent.setType("*/*");
+                ApplicationData.setGroupId(id);
+                getActivity().startActivityForResult(intent, OPEN_REQUEST_CODE);
                 dismiss();
             }
         });
