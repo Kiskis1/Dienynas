@@ -20,6 +20,7 @@ import java.util.List;
 import lt.viko.eif.dienynas.R;
 import lt.viko.eif.dienynas.adapters.GroupAdapter;
 import lt.viko.eif.dienynas.adapters.GroupAdapter.Interaction;
+import lt.viko.eif.dienynas.listeners.OnItemClickListener;
 import lt.viko.eif.dienynas.models.Group;
 import lt.viko.eif.dienynas.utils.ApplicationData;
 import lt.viko.eif.dienynas.utils.Utils;
@@ -48,7 +49,7 @@ public class GroupsFragment extends Fragment implements Interaction {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_nav_groups_to_createGroupFragment);
+                Navigation.findNavController(view).navigate(R.id.action_nav_groups_to_nav_create_group);
             }
         });
 
@@ -66,7 +67,7 @@ public class GroupsFragment extends Fragment implements Interaction {
         List<Group> list = ApplicationData.getDestytojas().getGroup();
         mGroupAdapter.submitList(list);
 
-        mGroupAdapter.setOnItemCLickListener(new GroupAdapter.OnItemCLickListener() {
+        mGroupAdapter.setOnItemCLickListener(new OnItemClickListener() {
             @Override
             public void OnItemClick(Group group) {
                 Bundle bundle = new Bundle();

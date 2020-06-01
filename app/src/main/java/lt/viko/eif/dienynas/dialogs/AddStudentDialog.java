@@ -56,6 +56,7 @@ public class AddStudentDialog extends DialogFragment implements View.OnClickList
         assert getArguments() != null;
         id = getArguments().getLong("groupid") - 1;
         this.setCancelable(true);
+        destytojasViewModel = new ViewModelProvider(this).get(DestytojasViewModel.class);
     }
 
     @Override
@@ -67,8 +68,6 @@ public class AddStudentDialog extends DialogFragment implements View.OnClickList
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        destytojasViewModel = new ViewModelProvider(this).get(DestytojasViewModel.class);
 
         mStudCode = view.findViewById(R.id.edit_student_code);
         mFullName = view.findViewById(R.id.edit_student_full_name);

@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
@@ -30,6 +31,7 @@ public class StorageRepository {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Destytojas dest;
 
+
     public void getDest(){
         db.collection("dest")
                 .document("0xMxDmsl6maRFdBYhJ9T")
@@ -37,6 +39,7 @@ public class StorageRepository {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                         dest = documentSnapshot.toObject(Destytojas.class);
+                        //Log.i(TAG, "onCreate: " + dest.getGroup().get(0).getStudents().toString());
                         ApplicationData.setDestytojas(dest);
                     }
                 });
@@ -64,4 +67,7 @@ public class StorageRepository {
                 .set(dest);
     }
 
+    public CollectionReference searchForGrades() {
+        return db.collection("dest");
+    }
 }

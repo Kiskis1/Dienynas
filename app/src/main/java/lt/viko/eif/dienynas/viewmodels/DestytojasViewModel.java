@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.gauriinfotech.commons.Commons;
+import lt.viko.eif.dienynas.SearchTask;
+import lt.viko.eif.dienynas.fragments.MainFragment;
 import lt.viko.eif.dienynas.models.Destytojas;
 import lt.viko.eif.dienynas.models.Group;
 import lt.viko.eif.dienynas.models.Student;
@@ -38,24 +40,24 @@ import lt.viko.eif.dienynas.utils.ApplicationData;
 
 public class DestytojasViewModel extends ViewModel {
     private static final String TAG = DestytojasViewModel.class.getSimpleName();
-    private static final int PAGEWIDTH = 595;
-    private static final int PAGEHEIGHT = 842;
 
     private DataFormatter dataFormatter = new DataFormatter();
+    private StorageRepository repo = StorageRepository.getInstance();
+    private List<Destytojas> destList = new ArrayList<>();
 
 
     public void addGroup(Group group) {
-        StorageRepository.getInstance().addGroup(group);
+        repo.addGroup(group);
     }
 
     public void setDest(Destytojas dest) {
-        StorageRepository.getInstance().setDest(dest);
+        repo.setDest(dest);
     }
 
     public void saveGrades(Group group) {
         Destytojas dest = ApplicationData.getDestytojas();
         dest.getGroup().set((int) group.getId() - 1, group);
-        StorageRepository.getInstance().setDest(dest);
+        repo.setDest(dest);
     }
 
     public void addBulkStudentsFromExcel(Uri currentUri) throws IOException, InvalidFormatException {
@@ -107,6 +109,10 @@ public class DestytojasViewModel extends ViewModel {
         //setDest(dest);
 
     }
+    public void searchForGrades2(String code, MainFragment mainFragment){
+        new SearchTask(code, mainFragment).execute();
+    }
+
 
     public boolean exportGroupToPdf(Group group) {
         boolean completed = false;
@@ -191,5 +197,4 @@ public class DestytojasViewModel extends ViewModel {
         document.add(table1);
 
     }
-
 }

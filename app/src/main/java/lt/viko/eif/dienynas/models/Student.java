@@ -20,7 +20,7 @@ public class Student {
         this.grades = grades;
     }
 
-    private String getCode() {
+    public String getCode() {
         return code;
     }
 
@@ -28,7 +28,7 @@ public class Student {
         this.code = code;
     }
 
-    private String getFullName() {
+    public String getFullName() {
         return fullName;
     }
 

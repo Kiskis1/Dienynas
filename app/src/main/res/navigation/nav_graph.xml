@@ -9,19 +9,27 @@
         android:id="@+id/nav_home"
         android:name="lt.viko.eif.dienynas.fragments.MainFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_main"/>
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_nav_home_to_nav_grades"
+            app:destination="@id/nav_grades" />
+    </fragment>
     <fragment
         android:id="@+id/nav_login"
         android:name="lt.viko.eif.dienynas.fragments.LoginFragment"
         android:label="@string/menu_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_nav_login_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
     <fragment
         android:id="@+id/nav_groups"
         android:name="lt.viko.eif.dienynas.fragments.GroupsFragment"
         android:label="@string/menu_groups"
         tools:layout="@layout/fragment_groups" >
         <action
-            android:id="@+id/action_nav_groups_to_createGroupFragment"
+            android:id="@+id/action_nav_groups_to_nav_create_group"
             app:destination="@id/nav_create_group" />
         <action
             android:id="@+id/action_nav_groups_to_nav_single_group"
@@ -41,5 +49,10 @@
             android:name="group"
             app:argType="string"/>
     </fragment>
+    <fragment
+        android:id="@+id/nav_grades"
+        android:name="lt.viko.eif.dienynas.fragments.GradesFragment"
+        android:label="fragment_grades"
+        tools:layout="@layout/fragment_grades" />
 
 </navigation>

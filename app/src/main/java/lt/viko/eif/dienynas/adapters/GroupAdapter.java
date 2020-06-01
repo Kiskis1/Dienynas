@@ -14,20 +14,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import lt.viko.eif.dienynas.R;
+import lt.viko.eif.dienynas.listeners.OnItemClickListener;
 import lt.viko.eif.dienynas.models.Group;
 
 public class GroupAdapter
         extends ListAdapter<Group, GroupAdapter.GroupViewHolder> {
 
 
-    public interface OnItemCLickListener{
-        void OnItemClick(Group group);
-    }
+    private OnItemClickListener mOnItemClickListener;
 
-    private OnItemCLickListener mOnItemCLickListener;
-
-    public void setOnItemCLickListener(OnItemCLickListener onItemCLickListener) {
-        this.mOnItemCLickListener = onItemCLickListener;
+    public void setOnItemCLickListener(OnItemClickListener onItemCLickListener) {
+        this.mOnItemClickListener = onItemCLickListener;
     }
 
     private Interaction interaction;
@@ -67,7 +64,7 @@ public class GroupAdapter
             Group clicked = getItem(getAdapterPosition());
             Log.i("clicked", clicked.toString());
 
-            mOnItemCLickListener.OnItemClick(clicked);
+            mOnItemClickListener.OnItemClick(clicked);
         }
 
         void bind(Group item) {

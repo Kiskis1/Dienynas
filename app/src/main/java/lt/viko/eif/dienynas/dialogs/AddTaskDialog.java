@@ -45,6 +45,7 @@ public class AddTaskDialog extends DialogFragment implements View.OnClickListene
         assert getArguments() != null;
         id = getArguments().getLong("groupid") - 1;
         this.setCancelable(true);
+        destytojasViewModel = new ViewModelProvider(this).get(DestytojasViewModel.class);
     }
 
 
@@ -58,7 +59,6 @@ public class AddTaskDialog extends DialogFragment implements View.OnClickListene
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        destytojasViewModel = new ViewModelProvider(this).get(DestytojasViewModel.class);
         mEditText = view.findViewById(R.id.dialog_edit_task);
         Button mCancel = view.findViewById(R.id.dialog_button_cancel);
         Button mSubmit = view.findViewById(R.id.dialog_button_okay);

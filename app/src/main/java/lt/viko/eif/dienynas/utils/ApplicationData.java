@@ -1,6 +1,7 @@
 package lt.viko.eif.dienynas.utils;
 
 import android.app.Application;
+import android.util.Log;
 
 import lt.viko.eif.dienynas.models.Destytojas;
 import lt.viko.eif.dienynas.models.Group;
@@ -28,20 +29,21 @@ public class ApplicationData extends Application {
         ApplicationData.destytojas = destytojas;
     }
 
-    public static long getLastId(){
+    public static long getLastId() {
         long max = 0;
-        for (Group g : destytojas.getGroup()){
+        for (Group g : destytojas.getGroup()) {
             if (max < g.getId()) {
                 max = g.getId();
             }
         }
-        return max+1;
+        return max + 1;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
         StorageRepository.getInstance().getDest();
+        Log.i(TAG, "onCreate: aSDASDASFSFHGASFDADGASDGSDFGSDGSDFGSDFGDFSGADHADFHDSFH");
 
     }
 }
