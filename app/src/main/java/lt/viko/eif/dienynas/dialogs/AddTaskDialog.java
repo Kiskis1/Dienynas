@@ -55,6 +55,7 @@ public class AddTaskDialog extends DialogFragment implements View.OnClickListene
         return inflater.inflate(R.layout.dialog_add_task, container);
     }
 
+    //TODO ADD SUCCESS AND FAILURE TOAST
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

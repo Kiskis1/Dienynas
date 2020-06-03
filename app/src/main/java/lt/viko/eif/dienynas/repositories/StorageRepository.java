@@ -16,6 +16,7 @@ import lt.viko.eif.dienynas.models.Destytojas;
 import lt.viko.eif.dienynas.models.Group;
 import lt.viko.eif.dienynas.utils.ApplicationData;
 
+//TODO: DOT NOTATION
 public class StorageRepository {
     private final static String TAG = StorageRepository.class.getSimpleName();
 

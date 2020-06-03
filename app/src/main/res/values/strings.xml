@@ -60,6 +60,7 @@
     <string name="single_group_name">Group name</string>
     <!-- TODO -->
     <string name="table_code_and_name">Code\nFirst\nLast</string>
+    <string name="menu_grades">Grades</string>
 
 
 </resources>

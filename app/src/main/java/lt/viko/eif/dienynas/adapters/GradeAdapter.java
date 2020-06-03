@@ -5,9 +5,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,8 +17,6 @@ import java.util.List;
 
 import lt.viko.eif.dienynas.R;
 import lt.viko.eif.dienynas.models.Group;
-
-import static lt.viko.eif.dienynas.utils.App.getContext;
 
 public class GradeAdapter
         extends ListAdapter<Group, GradeAdapter.GradeViewHolder> {
@@ -57,16 +53,9 @@ public class GradeAdapter
     }
 
     public class GradeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
         private int SCREEN_HEIGHT;
         private int SCREEN_WIDTH;
-        private RelativeLayout mRelativeLayout;
-        private TableLayout mTableLayout;
-        private TableRow mTableRow;
-        private TableRow mTableRow2;
-        private final int COLUMNS_PER_SCREEN = 3;
-        private final int ROWS_PER_SCREEN = 9;
-        private final Interaction interaction;
+        private Interaction interaction;
 
         GradeViewHolder(View view, Interaction interaction) {
             super(view);
@@ -86,61 +75,63 @@ public class GradeAdapter
 
         }
 
-        private void getScreenDimension() {
-            SCREEN_WIDTH = getContext().getResources().getDisplayMetrics().widthPixels;
-            SCREEN_HEIGHT = getContext().getResources().getDisplayMetrics().heightPixels;
-        }
-//TODO: FIX TABLE
-        public void bind(Group item) {
+        //TODO: FIX TABLE
+        public void bind(Group group) {
             getScreenDimension();
-            mRelativeLayout = itemView.findViewById(R.id.item_grade_relative_layout);
+            LinearLayout mHeaderLayout = itemView.findViewById(R.id.grades_header);
+            LinearLayout mGradesLayout = itemView.findViewById(R.id.grades_grades);
+            TextView mGroupName = itemView.findViewById(R.id.item_grades_group_name);
 
-            mTableLayout = new TableLayout(getContext());
-            mTableLayout.setPadding(0, 0, 0, 0);
-            TableLayout.LayoutParams layoutParamsTableLayoutA = new TableLayout.LayoutParams(SCREEN_WIDTH / COLUMNS_PER_SCREEN, SCREEN_HEIGHT / ROWS_PER_SCREEN);
-            mTableLayout.setLayoutParams(layoutParamsTableLayoutA);
-            mTableLayout.setBackgroundColor(getContext().getResources().getColor(R.color.colorPrimaryDark));
+            mGroupName.setText(group.getName());
 
-            mTableRow = new TableRow(getContext());
-            TableRow.LayoutParams layoutParamsTableRow = new TableRow.LayoutParams(SCREEN_WIDTH / COLUMNS_PER_SCREEN, SCREEN_HEIGHT / ROWS_PER_SCREEN);
-            mTableRow.setLayoutParams(layoutParamsTableRow);
-            mTableRow.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
 
-            mTableRow2 = new TableRow(getContext());
-            mTableRow2.setLayoutParams(layoutParamsTableRow);
-            mTableRow2.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
+            TextView mTextView = new TextView(itemView.getContext());
+            mTextView.setBackgroundResource(R.drawable.border);
+            mTextView.setText("Code");
+            mTextView.setMinimumHeight(SCREEN_HEIGHT / 12);
+            mTextView.setMinimumWidth(SCREEN_WIDTH / 3);
+//            mTextView.setTextSize(R.dimen.cell_text_size);
+            mTextView.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
 
-            TextView header = new TextView(getContext());
-            header.setText(R.string.table_code_and_name);
-            header.setTextSize(getContext().getResources().getDimension(R.dimen.cell_text_size));
-            this.mTableRow.addView(header);
+            mHeaderLayout.addView(mTextView, 0);
 
-            TextView task;
-            for(String s : item.getTask()){
-                task = new TextView(getContext());
-                task.setText(s);
-                task.setTextSize(getContext().getResources().getDimension(R.dimen.cell_text_size));
-                this.mTableRow.addView(task);
+            for (int i = 1; i <= group.getTask().size(); i++) {
+                TextView mTextView2 = new TextView(itemView.getContext());
+                mTextView2.setBackgroundResource(R.drawable.border);
+                mTextView2.setText(group.getTask().get(i - 1));
+                mTextView2.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
+//                mTextView.setTextSize(R.dimen.cell_text_size);
+                mTextView2.setMinimumWidth(SCREEN_WIDTH / 3);
+                mTextView2.setMinimumHeight(SCREEN_HEIGHT / 12);
+                mTextView2.setHeight(SCREEN_HEIGHT / 12);
+                mTextView2.setWidth(SCREEN_WIDTH / 3);
+                mHeaderLayout.addView(mTextView2, i);
             }
-            this.mTableLayout.addView(mTableRow);
+            mTextView = new TextView(itemView.getContext());
+            mTextView.setBackgroundResource(R.drawable.border);
+            mTextView.setMinimumHeight(SCREEN_HEIGHT / 12);
+            mTextView.setMinimumWidth(SCREEN_WIDTH / 3);
+//            mTextView.setTextSize(R.dimen.cell_text_size);
+            mTextView.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
+            mTextView.setText(group.getStudents().get(0).getCode());
 
-            TextView code = new TextView(getContext());
-            code.setText(item.getStudents().get(0).getCode());
-            code.setTextSize(getContext().getResources().getDimension(R.dimen.cell_text_size));
-            this.mTableRow2.addView(code);
-
-            TextView grade;
-            for(int g : item.getStudents().get(0).getGrades()){
-                grade = new TextView(getContext());
-                grade.setText(String.valueOf(g));
-                grade.setTextSize(getContext().getResources().getDimension(R.dimen.cell_text_size));
-                this.mTableRow2.addView(grade);
+            mGradesLayout.addView(mTextView, 0);
+            for (int i = 1; i <= group.getStudents().get(0).getGrades().size(); i++) {
+                TextView mTextView2 = new TextView(itemView.getContext());
+                mTextView2.setBackgroundResource(R.drawable.border);
+                mTextView2.setText(String.valueOf(group.getStudents().get(0).getGrades().get(i - 1)));
+                mTextView2.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
+//                mTextView2.setTextSize(R.dimen.cell_text_size);
+                mTextView2.setMinimumWidth(SCREEN_WIDTH / 3);
+                mTextView2.setMinimumHeight(SCREEN_HEIGHT / 12);
+                mGradesLayout.addView(mTextView2, i);
             }
-            this.mTableLayout.addView(mTableRow2);
 
+        }
 
-            this.mRelativeLayout.addView(mTableLayout);
-
+        private void getScreenDimension() {
+            SCREEN_WIDTH = itemView.getResources().getDisplayMetrics().widthPixels;
+            SCREEN_HEIGHT = itemView.getResources().getDisplayMetrics().heightPixels;
         }
 
     }

@@ -5,8 +5,10 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,10 +24,11 @@ import lt.viko.eif.dienynas.models.Group;
 import lt.viko.eif.dienynas.utils.Utils;
 import lt.viko.eif.dienynas.viewmodels.DestytojasViewModel;
 
+//https://stackoverflow.com/questions/1109022/close-hide-android-soft-keyboard
 public class MainFragment extends Fragment {
     private final static String TAG = MainFragment.class.getSimpleName();
     private MainFragment mainFragment;
-
+    public ProgressBar mProgressBar;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,8 +39,7 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    ) {
+            Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main, container, false);
     }
@@ -48,17 +50,19 @@ public class MainFragment extends Fragment {
 
         final EditText mCode = view.findViewById(R.id.main_edit_code);
         Button mSearch = view.findViewById(R.id.button_search_by_id);
+        mProgressBar = view.findViewById(R.id.progressBar);
 
         mSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String code = mCode.getText().toString();
+                mCode.onEditorAction(EditorInfo.IME_ACTION_DONE);
                 if (TextUtils.isEmpty(code) || !TextUtils.isDigitsOnly(code)){
                     Toast.makeText(getContext(),"Invalid code", Toast.LENGTH_LONG).show();
                     return;
                 }
                 code = String.format("s%s", code);
-                destytojasViewModel.searchForGrades2(code,mainFragment);
+                destytojasViewModel.searchForGrades2(code, mainFragment, mProgressBar);
                 //Log.i(TAG, groupList.toString());
             }
         });

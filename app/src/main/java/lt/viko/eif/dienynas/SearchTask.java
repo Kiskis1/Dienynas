@@ -1,6 +1,10 @@
 package lt.viko.eif.dienynas;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -16,38 +20,57 @@ import lt.viko.eif.dienynas.models.Student;
 import lt.viko.eif.dienynas.repositories.StorageRepository;
 
 //https://stackoverflow.com/questions/9458258/return-a-value-from-asynctask-in-android
+//TODO https://stackoverflow.com/questions/10446125/how-to-show-progress-dialog-in-android
+//https://stackoverflow.com/questions/39015136/hide-show-progressbar-using-asynctask
+//https://stackoverflow.com/questions/4280608/disable-a-whole-activity-from-user-action
 public class SearchTask extends AsyncTask<Void, Void, Void> {
     private final static String TAG = SearchTask.class.getSimpleName();
     private StorageRepository repo = StorageRepository.getInstance();
     private List<Group> groupList = new ArrayList<>();
-    private Group newGroup;
-    private List<Student> student = new ArrayList<>();
     private String code;
     private MainFragment mainFragment;
+    private Context context;
+    private ProgressBar progressBar;
 
-    public SearchTask(String code, MainFragment mainFragment) {
+    public SearchTask(String code, MainFragment mainFragment, ProgressBar progressBar) {
         this.code = code;
         this.mainFragment = mainFragment;
+        this.progressBar = progressBar;
     }
 
-//TODO: CHECK IF FOUND > 0
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        progressBar.setVisibility(View.VISIBLE);
+        mainFragment.getView().findViewById(R.id.progressBarContainer).setVisibility(View.VISIBLE);
+        mainFragment.getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
+
+    //TODO: CHECK IF FOUND > 0
     @Override
     protected Void doInBackground(Void... voids) {
 //        Log.i(TAG, "SearchTask: " + code);
         groupList.clear();
-        student.clear();
+//        student.clear();
+//        try {
+//            Thread.sleep(5000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         repo.searchForGrades().get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
                     Destytojas dest = queryDocumentSnapshot.toObject(Destytojas.class);
                     for (Group group : dest.getGroup()) {
-                        newGroup = new Group();
-                        newGroup.setId(group.getId());
-                        newGroup.setTask(group.getTask());
-                        newGroup.setName(group.getName());
                         for (Student stud : group.getStudents()) {
                             if (stud.getCode().equals(code)) {
+                                Group newGroup = new Group();
+                                List<Student> student = new ArrayList<>();
+                                newGroup.setId(group.getId());
+                                newGroup.setTask(group.getTask());
+                                newGroup.setName(group.getName());
                                 student.add(stud);
                                 newGroup.setStudents(student);
                                 groupList.add(newGroup);
@@ -61,4 +84,13 @@ public class SearchTask extends AsyncTask<Void, Void, Void> {
         return null;
     }
 
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+        mainFragment.getView().findViewById(R.id.progressBarContainer).setVisibility(View.INVISIBLE);
+        mainFragment.getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        if (progressBar != null && progressBar.isShown()) {
+            progressBar.setVisibility(View.GONE);
+        }
+    }
 }

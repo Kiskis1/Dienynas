@@ -2,6 +2,7 @@ package lt.viko.eif.dienynas.viewmodels;
 
 import android.net.Uri;
 import android.os.Environment;
+import android.widget.ProgressBar;
 
 import androidx.lifecycle.ViewModel;
 
@@ -109,8 +110,9 @@ public class DestytojasViewModel extends ViewModel {
         //setDest(dest);
 
     }
-    public void searchForGrades2(String code, MainFragment mainFragment){
-        new SearchTask(code, mainFragment).execute();
+
+    public void searchForGrades2(String code, MainFragment mainFragment, ProgressBar progressBar) {
+        new SearchTask(code, mainFragment, progressBar).execute();
     }
 
 
