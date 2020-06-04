@@ -68,7 +68,6 @@ public class GroupAdapter
         }
 
         void bind(Group item) {
-            //TODO use itemView and set data
             TextView mGroupName = itemView.findViewById(R.id.text_group_name);
 
             mGroupName.setText(item.getName());
@@ -83,14 +82,12 @@ public class GroupAdapter
         @Override
         public boolean areItemsTheSame(@NonNull Group oldItem,
                                        @NonNull Group newItem) {
-            //TODO "not implemented"
             return false;
         }
 
         @Override
         public boolean areContentsTheSame(@NonNull Group oldItem,
                                           @NonNull Group newItem) {
-            //TODO "not implemented"
             return false;
         }
     }

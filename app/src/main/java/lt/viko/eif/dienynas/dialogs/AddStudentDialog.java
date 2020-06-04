@@ -2,17 +2,20 @@ package lt.viko.eif.dienynas.dialogs;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +68,6 @@ public class AddStudentDialog extends DialogFragment implements View.OnClickList
         return inflater.inflate(R.layout.dialog_add_student, container);
     }
 
-    //TODO ADD SUCCESS AND FAILURE TOAST
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -78,16 +80,21 @@ public class AddStudentDialog extends DialogFragment implements View.OnClickList
         mAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (TextUtils.isEmpty(mStudCode.getText()) || TextUtils.isEmpty(mFullName.getText()) || !mFullName.getText().toString().contains(" ")) {
+                    Toast.makeText(getContext(), R.string.adding_failed_student, Toast.LENGTH_LONG).show();
+                    return;
+                }
                 Destytojas dest = ApplicationData.getDestytojas();
                 int size = dest.getGroup().get((int) id).getTask().size();
                 for (int i = 0; i < size; i++) {
                     grades.add(0);
                 }
                 Student stud = new Student(mStudCode.getText().toString(), mFullName.getText().toString(), grades);
-                Log.i(TAG, stud.toString());
-                Log.i(TAG, "ONCLICK" + id);
+//                Log.i(TAG, stud.toString());
+//                Log.i(TAG, "ONCLICK" + id);
                 dest.getGroup().get((int) id).getStudents().add(stud);
                 destytojasViewModel.setDest(dest);
+                Snackbar.make(view, R.string.adding_success_student, Snackbar.LENGTH_LONG).show();
                 dismiss();
             }
         });

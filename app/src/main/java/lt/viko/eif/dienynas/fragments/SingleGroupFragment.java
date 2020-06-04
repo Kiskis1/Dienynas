@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -41,7 +42,6 @@ import lt.viko.eif.dienynas.utils.VerticalScroll;
 import lt.viko.eif.dienynas.viewmodels.DestytojasViewModel;
 
 //        https://github.com/shabyWoks/DynamicTableLayout/blob/master/app/src/main/java/com/shaby/dynamictablelayout/MainActivity.java
-//TODO: SET TITLE TO GROUP NAME
 public class SingleGroupFragment extends Fragment implements HorizontalScroll.ScrollViewListener, VerticalScroll.ScrollViewListener {
     private final static String TAG = SingleGroupFragment.class.getSimpleName();
 
@@ -88,7 +88,8 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
         //Log.i(TAG, getArguments().getString("group"));
         assert getArguments() != null;
         group = Utils.getGsonParser().fromJson(getArguments().getString("group"), Group.class);
-
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(group.getName());
     }
 
 
@@ -377,11 +378,10 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
                 return true;
             case R.id.action_export:
                 //destytojasViewModel.exportGroupToPDF(group);
-                if(destytojasViewModel.exportGroupToPdf(group)){
-                    Snackbar.make(getView(), R.string.single_export_success,Snackbar.LENGTH_LONG).show();
-                }
-                else {
-                    Toast.makeText(getContext(), R.string.single_export_fail,Toast.LENGTH_LONG).show();
+                if (destytojasViewModel.exportGroupToPdf(group)) {
+                    Snackbar.make(getView(), R.string.single_export_success, Snackbar.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), R.string.single_export_fail, Toast.LENGTH_LONG).show();
                 }
                 return true;
             default:

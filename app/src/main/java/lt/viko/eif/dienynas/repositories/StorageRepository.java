@@ -33,7 +33,7 @@ public class StorageRepository {
     private Destytojas dest;
 
 
-    public void getDest(){
+    public void getDest() {
         db.collection("dest")
                 .document("0xMxDmsl6maRFdBYhJ9T")
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -58,11 +58,12 @@ public class StorageRepository {
                 });
     }
 
-    public void setData(Destytojas dest){
+    public void setData(Destytojas dest) {
         db.collection("dest")
                 .add(dest);
     }
-    public void setDest(Destytojas dest){
+
+    public void setDest(Destytojas dest) {
         db.collection("dest")
                 .document("0xMxDmsl6maRFdBYhJ9T")
                 .set(dest);

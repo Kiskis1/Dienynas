@@ -2,6 +2,7 @@ package lt.viko.eif.dienynas.viewmodels;
 
 import android.net.Uri;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.ProgressBar;
 
 import androidx.lifecycle.ViewModel;
@@ -45,6 +46,7 @@ public class DestytojasViewModel extends ViewModel {
     private DataFormatter dataFormatter = new DataFormatter();
     private StorageRepository repo = StorageRepository.getInstance();
     private List<Destytojas> destList = new ArrayList<>();
+    private SearchTask searchTask;
 
 
     public void addGroup(Group group) {
@@ -69,7 +71,7 @@ public class DestytojasViewModel extends ViewModel {
         for (String task : group.getTask()) {
             grades.add(0);
         }
-        //TODO: ASK FOR PERMISSIONS
+
         String path = Commons.getPath(currentUri, App.getContext());
         Workbook workbook = WorkbookFactory.create(new File(path));
         Sheet sheet = workbook.getSheetAt(0);
@@ -79,7 +81,6 @@ public class DestytojasViewModel extends ViewModel {
         int rowIndex = 0;
         boolean found1 = false;
         boolean found2 = false;
-        String[] matches = new String[]{"Vardas", "Pavarde", "Pavardė"};
 
         for (Row row : sheet) {
             for (Cell cell : row) {
@@ -112,8 +113,17 @@ public class DestytojasViewModel extends ViewModel {
     }
 
     public void searchForGrades2(String code, MainFragment mainFragment, ProgressBar progressBar) {
-        new SearchTask(code, mainFragment, progressBar).execute();
+        Log.i(TAG, "searchForGrades2: executed");
+        searchTask = new SearchTask(code, mainFragment, progressBar);
+        Log.i(TAG, "searchForGrades2: " + searchTask.toString());
+        searchTask.execute();
     }
+
+//    public void cancelSearchTask() {
+//        if (searchTask != null) {
+//            searchTask.cancel(true);
+//        }
+//    }
 
 
     public boolean exportGroupToPdf(Group group) {

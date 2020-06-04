@@ -69,7 +69,6 @@ public class GradeAdapter
             if (getAdapterPosition() == RecyclerView.NO_POSITION) return;
             Group clicked = getItem(getAdapterPosition());
             switch (v.getId()) {
-                //TODO handle clicks
                 default:
             }
 
@@ -143,14 +142,12 @@ public class GradeAdapter
         @Override
         public boolean areItemsTheSame(@NonNull Group oldItem,
                                        @NonNull Group newItem) {
-            //TODO "not implemented"
             return false;
         }
 
         @Override
         public boolean areContentsTheSame(@NonNull Group oldItem,
                                           @NonNull Group newItem) {
-            //TODO "not implemented"
             return false;
         }
     }

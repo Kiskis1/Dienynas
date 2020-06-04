@@ -2,6 +2,7 @@ package lt.viko.eif.dienynas;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
@@ -20,7 +21,7 @@ import lt.viko.eif.dienynas.models.Student;
 import lt.viko.eif.dienynas.repositories.StorageRepository;
 
 //https://stackoverflow.com/questions/9458258/return-a-value-from-asynctask-in-android
-//TODO https://stackoverflow.com/questions/10446125/how-to-show-progress-dialog-in-android
+//https://stackoverflow.com/questions/10446125/how-to-show-progress-dialog-in-android
 //https://stackoverflow.com/questions/39015136/hide-show-progressbar-using-asynctask
 //https://stackoverflow.com/questions/4280608/disable-a-whole-activity-from-user-action
 public class SearchTask extends AsyncTask<Void, Void, Void> {
@@ -47,17 +48,17 @@ public class SearchTask extends AsyncTask<Void, Void, Void> {
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
-    //TODO: CHECK IF FOUND > 0
+    // CHECK IF FOUND > 0
+    // ADD ONCANCEL
     @Override
     protected Void doInBackground(Void... voids) {
 //        Log.i(TAG, "SearchTask: " + code);
         groupList.clear();
-//        student.clear();
-//        try {
-//            Thread.sleep(5000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         repo.searchForGrades().get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -78,19 +79,34 @@ public class SearchTask extends AsyncTask<Void, Void, Void> {
                         }
                     }
                 }
-                mainFragment.postGrades(groupList);
+                if (mainFragment.getView() != null) {
+                    mainFragment.postGrades(groupList);
+                }
             }
         });
         return null;
     }
 
     @Override
+    protected void onCancelled() {
+        super.onCancelled();
+//        mainFragment.getView().findViewById(R.id.progressBarContainer).setVisibility(View.INVISIBLE);
+//        mainFragment.getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+//        if (progressBar != null && progressBar.isShown()) {
+//            progressBar.setVisibility(View.GONE);
+//        }
+    }
+
+    @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        mainFragment.getView().findViewById(R.id.progressBarContainer).setVisibility(View.INVISIBLE);
-        mainFragment.getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        if (progressBar != null && progressBar.isShown()) {
-            progressBar.setVisibility(View.GONE);
+        Log.i(TAG, "onPostExecute: " + mainFragment.toString());
+        if (mainFragment.getView() != null) {
+            mainFragment.getView().findViewById(R.id.progressBarContainer).setVisibility(View.INVISIBLE);
+            mainFragment.getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            if (progressBar != null && progressBar.isShown()) {
+                progressBar.setVisibility(View.GONE);
+            }
         }
     }
 }

@@ -43,7 +43,6 @@
     <fragment
         android:id="@+id/nav_single_group"
         android:name="lt.viko.eif.dienynas.fragments.SingleGroupFragment"
-        android:label="@string/single_group_name"
         tools:layout="@layout/fragment_single_group" >
         <argument
             android:name="group"
@@ -52,7 +51,7 @@
     <fragment
         android:id="@+id/nav_grades"
         android:name="lt.viko.eif.dienynas.fragments.GradesFragment"
-        android:label="@string/menu_grades"
+        android:label="@string/fragment_grades"
         tools:layout="@layout/fragment_grades" />
 
 </navigation>

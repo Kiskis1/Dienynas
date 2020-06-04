@@ -57,8 +57,8 @@ public class MainFragment extends Fragment {
             public void onClick(View view) {
                 String code = mCode.getText().toString();
                 mCode.onEditorAction(EditorInfo.IME_ACTION_DONE);
-                if (TextUtils.isEmpty(code) || !TextUtils.isDigitsOnly(code)){
-                    Toast.makeText(getContext(),"Invalid code", Toast.LENGTH_LONG).show();
+                if (TextUtils.isEmpty(code) || !TextUtils.isDigitsOnly(code)) {
+                    Toast.makeText(getContext(), "Invalid code", Toast.LENGTH_LONG).show();
                     return;
                 }
                 code = String.format("s%s", code);
@@ -68,9 +68,10 @@ public class MainFragment extends Fragment {
         });
     }
 
-    public void postGrades(List<Group> groupList){
+    public void postGrades(List<Group> groupList) {
         Bundle bundle = new Bundle();
         bundle.putString("group", Utils.getGsonParser().toJson(groupList));
         Navigation.findNavController(getView()).navigate(R.id.action_nav_home_to_nav_grades, bundle);
     }
+
 }

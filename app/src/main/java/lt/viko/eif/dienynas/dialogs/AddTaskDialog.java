@@ -1,6 +1,7 @@
 package lt.viko.eif.dienynas.dialogs;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import lt.viko.eif.dienynas.R;
 import lt.viko.eif.dienynas.models.Destytojas;
@@ -55,7 +58,6 @@ public class AddTaskDialog extends DialogFragment implements View.OnClickListene
         return inflater.inflate(R.layout.dialog_add_task, container);
     }
 
-    //TODO ADD SUCCESS AND FAILURE TOAST
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -67,12 +69,16 @@ public class AddTaskDialog extends DialogFragment implements View.OnClickListene
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (TextUtils.isEmpty(mEditText.getText())) {
+                    Toast.makeText(getContext(), R.string.adding_enter_task_name, Toast.LENGTH_LONG).show();
+                    return;
+                }
                 Destytojas dest = ApplicationData.getDestytojas();
-                for(Student stud : dest.getGroup().get((int)id).getStudents())
+                for (Student stud : dest.getGroup().get((int) id).getStudents())
                     stud.getGrades().add(0);
                 dest.getGroup().get((int) id).getTask().add(mEditText.getText().toString());
                 destytojasViewModel.setDest(dest);
-                Toast.makeText(getContext(), "SUBMIT", Toast.LENGTH_SHORT).show();
+                Snackbar.make(view, R.string.adding_success_task, Snackbar.LENGTH_LONG).show();
                 dismiss();
             }
         });
@@ -80,7 +86,7 @@ public class AddTaskDialog extends DialogFragment implements View.OnClickListene
         mCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "CANCEL", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.adding_cancel, Toast.LENGTH_SHORT).show();
                 dismiss();
             }
         });

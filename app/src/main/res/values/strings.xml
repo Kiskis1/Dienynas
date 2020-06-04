@@ -39,6 +39,12 @@
     <string name="adding_import_msg">Press button to select file from which to import students</string>
     <string name="adding_select">Select</string>
     <string name="adding_add">Add</string>
+    <string name="adding_success">Successfully added students!</string>
+    <string name="adding_success_student">Successfully added student</string>
+    <string name="adding_failed_student">Could not add student</string>
+    <string name="adding_enter_task_name">Enter task name</string>
+    <string name="adding_success_task">Successfully added task</string>
+    <string name="adding_cancel">Canceled</string>
 
     <!-- ADD TASK DIALOG -->
     <string name="dialog_enter_task_name">Enter task name</string>
@@ -57,10 +63,14 @@
 
     <!-- CONTENT DESCRIPTORS-->
     <string name="content_description_group_logo">Group logo</string>
-    <string name="single_group_name">Group name</string>
+
+    <!-- PERMISSIONS -->
+    <string name="perms_grant_permission">PLEASE GRANT PERMISSION</string>
+    <string name="perms_granted_permission">PERMISSION GRANTED</string>
+
     <!-- TODO -->
     <string name="table_code_and_name">Code\nFirst\nLast</string>
-    <string name="menu_grades">Grades</string>
+    <string name="fragment_grades">Grades</string>
 
 
 </resources>
