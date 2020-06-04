@@ -21,6 +21,8 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_nav_login_to_nav_home"
+            app:popUpTo="@+id/mobile_navigation"
+            app:popUpToInclusive="true"
             app:destination="@id/nav_home" />
     </fragment>
     <fragment

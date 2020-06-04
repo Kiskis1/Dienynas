@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/item_grades_group_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,18 +27,6 @@
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
-            <!--            <TextView-->
-            <!--                android:layout_width="100dp"-->
-            <!--                android:layout_height="100dp"-->
-            <!--                android:background="@drawable/border"-->
-            <!--                android:text="@string/single_group_name" />-->
-
-            <!--            <TextView-->
-            <!--                android:layout_width="100dp"-->
-            <!--                android:layout_height="100dp"-->
-            <!--                android:background="@drawable/border"-->
-            <!--                android:text="@string/single_group_name" />-->
         </LinearLayout>
 
         <LinearLayout
@@ -49,11 +37,6 @@
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/grades_header">
-
-            <!--            <TextView-->
-            <!--                android:layout_width="100dp"-->
-            <!--                android:layout_height="100dp"-->
-            <!--                android:text="@string/single_group_name" />-->
         </LinearLayout>
     </LinearLayout>
 </HorizontalScrollView>
