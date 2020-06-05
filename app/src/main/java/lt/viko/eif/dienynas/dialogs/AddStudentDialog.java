@@ -2,13 +2,13 @@ package lt.viko.eif.dienynas.dialogs;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +16,8 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +34,10 @@ public class AddStudentDialog extends DialogFragment implements View.OnClickList
 
     private static final int OPEN_REQUEST_CODE = 41;
 
-    private EditText mStudCode;
-    private EditText mFullName;
+    private TextInputLayout mStudCodeLayout;
+    private TextInputLayout mFullNameLayout;
+    private TextInputEditText mStudCode;
+    private TextInputEditText mFullName;
     private DestytojasViewModel destytojasViewModel;
     private List<Integer> grades = new ArrayList<>();
 
@@ -72,6 +76,8 @@ public class AddStudentDialog extends DialogFragment implements View.OnClickList
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mStudCodeLayout = view.findViewById(R.id.edit_student_code_layout);
+        mFullNameLayout = view.findViewById(R.id.edit_student_full_name_layout);
         mStudCode = view.findViewById(R.id.edit_student_code);
         mFullName = view.findViewById(R.id.edit_student_full_name);
         Button mAdd = view.findViewById(R.id.button_add_student);
@@ -80,22 +86,68 @@ public class AddStudentDialog extends DialogFragment implements View.OnClickList
         mAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (TextUtils.isEmpty(mStudCode.getText()) || TextUtils.isEmpty(mFullName.getText()) || !mFullName.getText().toString().contains(" ")) {
-                    Toast.makeText(getContext(), R.string.adding_failed_student, Toast.LENGTH_LONG).show();
+                if (TextUtils.isEmpty(mStudCode.getText())) {
+                    mStudCodeLayout.setError(getString(R.string.error_enter_code));
                     return;
-                }
+                } else mStudCodeLayout.setError(null);
+
+                if (TextUtils.isEmpty(mFullName.getText())) {
+                    mFullNameLayout.setError(getString(R.string.error_enter_name));
+                    return;
+                } else mFullNameLayout.setError(null);
+
+                if (mStudCode.getText().toString().split(" ").length < 2) {
+                    mFullNameLayout.setError(getString(R.string.error_enter_full_name));
+                    return;
+                } else mFullNameLayout.setError(null);
+
                 Destytojas dest = ApplicationData.getDestytojas();
                 int size = dest.getGroup().get((int) id).getTask().size();
                 for (int i = 0; i < size; i++) {
                     grades.add(0);
                 }
                 Student stud = new Student(mStudCode.getText().toString(), mFullName.getText().toString(), grades);
-//                Log.i(TAG, stud.toString());
-//                Log.i(TAG, "ONCLICK" + id);
                 dest.getGroup().get((int) id).getStudents().add(stud);
                 destytojasViewModel.setDest(dest);
                 Snackbar.make(view, R.string.adding_success_student, Snackbar.LENGTH_LONG).show();
                 dismiss();
+            }
+        });
+
+        mStudCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!TextUtils.isEmpty(mStudCode.getText())) mStudCodeLayout.setError(null);
+            }
+        });
+
+        mFullName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (mStudCode.getText().toString().split(" ").length < 2)
+                    mFullNameLayout.setError(null);
+
+                if (!TextUtils.isEmpty(mFullName.getText())) mFullNameLayout.setError(null);
             }
         });
 

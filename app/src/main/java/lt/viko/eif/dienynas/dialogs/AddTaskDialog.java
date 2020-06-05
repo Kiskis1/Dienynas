@@ -1,13 +1,13 @@
 package lt.viko.eif.dienynas.dialogs;
 
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +15,8 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import lt.viko.eif.dienynas.R;
 import lt.viko.eif.dienynas.models.Destytojas;
@@ -26,7 +28,8 @@ import lt.viko.eif.dienynas.viewmodels.DestytojasViewModel;
 public class AddTaskDialog extends DialogFragment implements View.OnClickListener {
     private final static String TAG = AddTaskDialog.class.getSimpleName();
 
-    private EditText mEditText;
+    private TextInputLayout mEditTextLayout;
+    private TextInputEditText mEditText;
     private DestytojasViewModel destytojasViewModel;
     private long id;
 
@@ -62,6 +65,7 @@ public class AddTaskDialog extends DialogFragment implements View.OnClickListene
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mEditTextLayout = view.findViewById(R.id.dialog_edit_task_layout);
         mEditText = view.findViewById(R.id.dialog_edit_task);
         Button mCancel = view.findViewById(R.id.dialog_button_cancel);
         Button mSubmit = view.findViewById(R.id.dialog_button_okay);
@@ -70,9 +74,10 @@ public class AddTaskDialog extends DialogFragment implements View.OnClickListene
             @Override
             public void onClick(View view) {
                 if (TextUtils.isEmpty(mEditText.getText())) {
-                    Toast.makeText(getContext(), R.string.adding_enter_task_name, Toast.LENGTH_LONG).show();
+                    mEditTextLayout.setError(getString(R.string.adding_enter_task_name));
                     return;
-                }
+                } else mEditTextLayout.setError(null);
+
                 Destytojas dest = ApplicationData.getDestytojas();
                 for (Student stud : dest.getGroup().get((int) id).getStudents())
                     stud.getGrades().add(0);
@@ -83,10 +88,26 @@ public class AddTaskDialog extends DialogFragment implements View.OnClickListene
             }
         });
 
+        mEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!TextUtils.isEmpty(mEditText.getText())) mEditTextLayout.setError(null);
+            }
+        });
+
         mCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), R.string.adding_cancel, Toast.LENGTH_SHORT).show();
                 dismiss();
             }
         });

@@ -25,7 +25,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginBottom="16dp"
         android:text="@string/text_type_student_id"
-        app:layout_constraintBottom_toTopOf="@+id/main_edit_code"
+        app:layout_constraintBottom_toTopOf="@+id/main_edit_code_layout"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.button.MaterialButton
@@ -38,38 +38,54 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/main_edit_code"
-        android:layout_width="150dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/main_edit_code_layout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
         android:layout_marginBottom="64dp"
-        android:ems="10"
-        android:hint="@string/sample_student_code"
-        android:importantForAutofill="no"
-        android:inputType="number"
-        android:maxLength="6"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/text_start_of_student_code">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/main_edit_code"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/sample_student_code"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:maxLength="6" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_start_of_student_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="76dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="70dp"
         android:text="@string/start_of_student_code"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/main_edit_code" />
+        app:layout_constraintEnd_toStartOf="@+id/main_edit_code_layout"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <FrameLayout
         android:id="@+id/progressBarContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="#80808080"
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:visibility="invisible">
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_default="wrap"
+        app:layout_constraintHeight_max="100dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_default="wrap">
 
         <ProgressBar
             android:id="@+id/progressBar"

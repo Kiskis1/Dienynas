@@ -36,7 +36,7 @@
     <!-- ADD STUDENT DIALOG -->
     <string name="adding_enter_student_code">Enter student code</string>
     <string name="adding_enter_student_full_name">Enter student full name</string>
-    <string name="adding_import_msg">Press button to select file from which to import students</string>
+    <string name="adding_import_msg">Press button to select file from which to import students.\nCurrently supported formats: ".xls"</string>
     <string name="adding_select">Select</string>
     <string name="adding_add">Add</string>
     <string name="adding_success">Successfully added students!</string>
@@ -59,7 +59,7 @@
     <string name="sample_full_name">Name Surname</string>
     <string name="sample_full_student_code">s012345</string>
     <string name="sample_student_code">012345</string>
-    <string name="sample_exam_text">Exam</string>
+    <string name="sample_exam_text">E.g Exam</string>
 
     <!-- CONTENT DESCRIPTORS-->
     <string name="content_description_group_logo">Group logo</string>
@@ -67,6 +67,10 @@
     <!-- PERMISSIONS -->
     <string name="perms_grant_permission">PLEASE GRANT PERMISSION</string>
     <string name="perms_granted_permission">PERMISSION GRANTED</string>
+    <!-- ERRORS -->
+    <string name="error_enter_full_name">Enter full name</string>
+    <string name="error_enter_name">Enter name</string>
+    <string name="error_enter_code">Enter code</string>
 
     <!-- TODO -->
     <string name="table_code_and_name">Code\nFirst\nLast</string>
