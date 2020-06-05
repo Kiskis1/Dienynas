@@ -245,17 +245,17 @@ public class SingleGroupFragment extends Fragment implements HorizontalScroll.Sc
 
         TableLayout.LayoutParams layoutParamsTableLayoutA = new TableLayout.LayoutParams(SCREEN_WIDTH / COLUMNS_PER_SCREEN, SCREEN_HEIGHT / ROWS_PER_SCREEN);
         tableLayoutA.setLayoutParams(layoutParamsTableLayoutA);
-        tableLayoutA.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        tableLayoutA.setBackgroundColor(getResources().getColor(R.color.primaryColor));
         this.relativeLayoutA.addView(tableLayoutA);
 
         TableLayout.LayoutParams layoutParamsTableLayoutB = new TableLayout.LayoutParams(SCREEN_WIDTH - (SCREEN_WIDTH / COLUMNS_PER_SCREEN), SCREEN_HEIGHT / ROWS_PER_SCREEN);
         tableLayoutB.setLayoutParams(layoutParamsTableLayoutB);
-        tableLayoutB.setBackgroundColor(getResources().getColor(R.color.colorSecondary));
+        tableLayoutB.setBackgroundColor(getResources().getColor(R.color.secondaryColor));
         this.horizontalScrollViewB.addView(tableLayoutB);
 
         TableLayout.LayoutParams layoutParamsTableLayoutC = new TableLayout.LayoutParams(SCREEN_WIDTH / COLUMNS_PER_SCREEN, SCREEN_HEIGHT - (SCREEN_HEIGHT / ROWS_PER_SCREEN));
         tableLayoutC.setLayoutParams(layoutParamsTableLayoutC);
-        tableLayoutC.setBackgroundColor(getResources().getColor(R.color.colorSecondary));
+        tableLayoutC.setBackgroundColor(getResources().getColor(R.color.secondaryColor));
         this.scrollViewC.addView(tableLayoutC);
 
         TableLayout.LayoutParams layoutParamsTableLayoutD = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT);

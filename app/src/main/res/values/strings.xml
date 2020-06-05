@@ -21,6 +21,8 @@
     <string name="text_type_student_id">Type your student ID:</string>
     <string name="main_search">Search</string>
     <string name="start_of_student_code">S</string>
+    <string name="main_no_grades_found">No grades found</string>
+
 
     <!-- ITEM GROUP RECYCLER VIEW -->
     <string name="item_group_name">TextView</string>
@@ -67,14 +69,15 @@
     <!-- PERMISSIONS -->
     <string name="perms_grant_permission">PLEASE GRANT PERMISSION</string>
     <string name="perms_granted_permission">PERMISSION GRANTED</string>
+
     <!-- ERRORS -->
     <string name="error_enter_full_name">Enter full name</string>
     <string name="error_enter_name">Enter name</string>
     <string name="error_enter_code">Enter code</string>
+    <string name="error_enter_task">Enter task</string>
 
     <!-- TODO -->
     <string name="table_code_and_name">Code\nFirst\nLast</string>
-    <string name="fragment_grades">Grades</string>
 
 
 </resources>

@@ -28,7 +28,7 @@ import lt.viko.eif.dienynas.viewmodels.DestytojasViewModel;
 public class MainFragment extends Fragment {
     private final static String TAG = MainFragment.class.getSimpleName();
     private MainFragment mainFragment;
-    public ProgressBar mProgressBar;
+    private ProgressBar mProgressBar;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,6 +52,7 @@ public class MainFragment extends Fragment {
         Button mSearch = view.findViewById(R.id.button_search_by_id);
         mProgressBar = view.findViewById(R.id.progressBar);
 
+
         mSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,6 +70,10 @@ public class MainFragment extends Fragment {
     }
 
     public void postGrades(List<Group> groupList) {
+        if (groupList.isEmpty()) {
+            Toast.makeText(getContext(), R.string.main_no_grades_found, Toast.LENGTH_SHORT).show();
+            return;
+        }
         Bundle bundle = new Bundle();
         bundle.putString("group", Utils.getGsonParser().toJson(groupList));
         Navigation.findNavController(getView()).navigate(R.id.action_nav_home_to_nav_grades, bundle);
