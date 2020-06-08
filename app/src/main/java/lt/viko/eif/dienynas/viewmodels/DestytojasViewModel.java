@@ -31,12 +31,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.gauriinfotech.commons.Commons;
-import lt.viko.eif.dienynas.SearchTask;
 import lt.viko.eif.dienynas.fragments.MainFragment;
 import lt.viko.eif.dienynas.models.Destytojas;
 import lt.viko.eif.dienynas.models.Group;
 import lt.viko.eif.dienynas.models.Student;
 import lt.viko.eif.dienynas.repositories.StorageRepository;
+import lt.viko.eif.dienynas.tasks.SearchTask;
 import lt.viko.eif.dienynas.utils.App;
 import lt.viko.eif.dienynas.utils.ApplicationData;
 

@@ -21,10 +21,10 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.snackbar.Snackbar;
 
 import lt.viko.eif.dienynas.R;
-import lt.viko.eif.dienynas.TableBuilder;
 import lt.viko.eif.dienynas.dialogs.AddStudentDialog;
 import lt.viko.eif.dienynas.dialogs.AddTaskDialog;
 import lt.viko.eif.dienynas.models.Group;
+import lt.viko.eif.dienynas.utils.TableBuilder;
 import lt.viko.eif.dienynas.utils.Utils;
 import lt.viko.eif.dienynas.viewmodels.DestytojasViewModel;
 

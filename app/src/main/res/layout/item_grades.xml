@@ -22,7 +22,7 @@
         <LinearLayout
             android:id="@+id/grades_header"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +32,7 @@
         <LinearLayout
             android:id="@+id/grades_grades"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"

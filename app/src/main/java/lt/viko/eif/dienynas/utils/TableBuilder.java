@@ -1,4 +1,4 @@
-package lt.viko.eif.dienynas;
+package lt.viko.eif.dienynas.utils;
 
 import android.content.Context;
 import android.view.Gravity;
@@ -16,10 +16,9 @@ import com.google.android.gms.common.util.ArrayUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import lt.viko.eif.dienynas.R;
 import lt.viko.eif.dienynas.models.Group;
 import lt.viko.eif.dienynas.models.Student;
-import lt.viko.eif.dienynas.utils.HorizontalScroll;
-import lt.viko.eif.dienynas.utils.VerticalScroll;
 
 //        https://github.com/shabyWoks/DynamicTableLayout/blob/master/app/src/main/java/com/shaby/dynamictablelayout/MainActivity.java
 public class TableBuilder implements HorizontalScroll.ScrollViewListener, VerticalScroll.ScrollViewListener {
@@ -193,17 +192,16 @@ public class TableBuilder implements HorizontalScroll.ScrollViewListener, Vertic
 
         TableLayout.LayoutParams layoutParamsTableLayoutA = new TableLayout.LayoutParams(SCREEN_WIDTH / COLUMNS_PER_SCREEN, SCREEN_HEIGHT / ROWS_PER_SCREEN);
         tableLayoutA.setLayoutParams(layoutParamsTableLayoutA);
-        tableLayoutA.setBackgroundColor(context.getResources().getColor(R.color.primaryColor));
+        tableLayoutA.setBackgroundResource(R.drawable.table_header);
         this.relativeLayoutA.addView(tableLayoutA);
 
         TableLayout.LayoutParams layoutParamsTableLayoutB = new TableLayout.LayoutParams(SCREEN_WIDTH - (SCREEN_WIDTH / COLUMNS_PER_SCREEN), SCREEN_HEIGHT / ROWS_PER_SCREEN);
         tableLayoutB.setLayoutParams(layoutParamsTableLayoutB);
-        tableLayoutB.setBackgroundColor(context.getResources().getColor(R.color.secondaryColor));
         this.horizontalScrollViewB.addView(tableLayoutB);
 
         TableLayout.LayoutParams layoutParamsTableLayoutC = new TableLayout.LayoutParams(SCREEN_WIDTH / COLUMNS_PER_SCREEN, SCREEN_HEIGHT - (SCREEN_HEIGHT / ROWS_PER_SCREEN));
         tableLayoutC.setLayoutParams(layoutParamsTableLayoutC);
-        tableLayoutC.setBackgroundColor(context.getResources().getColor(R.color.secondaryColor));
+
         this.scrollViewC.addView(tableLayoutC);
 
         TableLayout.LayoutParams layoutParamsTableLayoutD = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT);
@@ -232,31 +230,37 @@ public class TableBuilder implements HorizontalScroll.ScrollViewListener, Vertic
     private synchronized void addColumnsToTableB(String text) {
         tableRow = new TableRow(context);
         TableRow.LayoutParams layoutParamsTableRow = new TableRow.LayoutParams(SCREEN_WIDTH / COLUMNS_PER_SCREEN, SCREEN_HEIGHT / ROWS_PER_SCREEN);
-        tableRow.setPadding(3, 3, 3, 4);
+        tableRow.setPadding(3, 3, 3, 3);
         tableRow.setLayoutParams(layoutParamsTableRow);
-        TextView label_date = new TextView(context);
-        label_date.setText(text);
-        label_date.setTextSize(context.getResources().getDimension(R.dimen.cell_text_size));
-        this.tableRow.addView(label_date);
+        tableRow.setBackgroundResource(R.drawable.table_tasks);
+        tableRow.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
+        TextView label = new TextView(context);
+        label.setText(text);
+        label.setTextSize(context.getResources().getDimension(R.dimen.cell_text_size));
+        label.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+        this.tableRow.addView(label);
         this.tableRowB.addView(tableRow);
         tableColumnCountB++;
     }
 
     private synchronized void addRowToTableC(String text) {
-        TableRow tableRow1 = new TableRow(context);
+        TableRow tableRowC = new TableRow(context);
         TableRow.LayoutParams layoutParamsTableRow1 = new TableRow.LayoutParams(SCREEN_WIDTH / COLUMNS_PER_SCREEN, SCREEN_HEIGHT / ROWS_PER_SCREEN);
-        tableRow1.setPadding(3, 3, 3, 4);
-        tableRow1.setLayoutParams(layoutParamsTableRow1);
-        TextView label_date = new TextView(context);
-        label_date.setText(text);
-        label_date.setTextSize(context.getResources().getDimension(R.dimen.cell_text_size));
-        tableRow1.addView(label_date);
+        tableRowC.setPadding(3, 3, 3, 3);
+        tableRowC.setLayoutParams(layoutParamsTableRow1);
+        tableRowC.setBackgroundResource(R.drawable.table_tasks);
+        TextView label = new TextView(context);
+        label.setText(text);
+        label.setTextSize(context.getResources().getDimension(R.dimen.cell_text_size));
+        label.setGravity(Gravity.CENTER);
+        tableRowC.addView(label);
 
         TableRow tableRow = new TableRow(context);
         TableRow.LayoutParams layoutParamsTableRow = new TableRow.LayoutParams(SCREEN_WIDTH / COLUMNS_PER_SCREEN, SCREEN_HEIGHT / ROWS_PER_SCREEN);
         tableRow.setPadding(0, 0, 0, 0);
         tableRow.setLayoutParams(layoutParamsTableRow);
-        tableRow.addView(tableRow1);
+
+        tableRow.addView(tableRowC);
         this.tableLayoutC.addView(tableRow, tableRowCountC);
         tableRowCountC++;
     }
@@ -274,7 +278,7 @@ public class TableBuilder implements HorizontalScroll.ScrollViewListener, Vertic
         tableRow = new TableRow(context);
         TableRow.LayoutParams layoutParamsTableRow = new TableRow.LayoutParams(SCREEN_WIDTH / COLUMNS_PER_SCREEN, SCREEN_HEIGHT / ROWS_PER_SCREEN);
         tableRow.setPadding(3, 3, 3, 4);
-        tableRow.setBackground(context.getResources().getDrawable(R.drawable.border));
+        tableRow.setBackground(context.getResources().getDrawable(R.drawable.table_grades));
         tableRow.setLayoutParams(layoutParamsTableRow);
 
         Integer[] grades = ArrayUtils.toWrapperArray(context.getResources().getIntArray(R.array.grades));

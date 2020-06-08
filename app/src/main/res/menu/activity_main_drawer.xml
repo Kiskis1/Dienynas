@@ -13,6 +13,10 @@
             android:icon="@drawable/ic_mms_white_24dp"
             android:title="@string/menu_login" />
         <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_mms_white_24dp"
+            android:title="@string/menu_logout" />
+        <item
             android:id="@+id/nav_groups"
             android:icon="@drawable/ic_mms_white_24dp"
             android:title="@string/menu_groups" />

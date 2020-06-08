@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.firebase.ui.auth.AuthUI;
@@ -23,6 +25,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import lt.viko.eif.dienynas.R;
+import lt.viko.eif.dienynas.tasks.LoginTask;
+import lt.viko.eif.dienynas.viewmodels.DestytojasViewModel;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -35,10 +39,25 @@ public class LoginFragment extends Fragment {
 
     private static final int RC_SIGN_IN = 123;
 
+    private DestytojasViewModel destytojasViewModel;
+
+    private ProgressBar mProgressBar;
+    private LoginFragment loginFragment;
+
+    private FirebaseUser firebaseUser;
+
+
     public LoginFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        loginFragment = this;
+        destytojasViewModel = new ViewModelProvider(this).get(DestytojasViewModel.class);
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,6 +69,8 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mProgressBar = view.findViewById(R.id.login_progressBar);
+
         List<AuthUI.IdpConfig> providers = Arrays.asList(
                 new AuthUI.IdpConfig.EmailBuilder().build(),
                 new AuthUI.IdpConfig.GoogleBuilder().build());
@@ -75,20 +96,23 @@ public class LoginFragment extends Fragment {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                firebaseUser = firebaseAuth.getCurrentUser();
+                new LoginTask(loginFragment, mProgressBar, firebaseUser).execute();
                 //Navigation.findNavController(getView()).navigate(R.id.action_nav_login_to_nav_home);
 
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
                 // response.getError().getErrorCode() and handle the error.
-                // ...
                 Navigation.findNavController(getView()).navigate(R.id.action_nav_login_to_nav_home);
-                Toast.makeText(getContext(), "NEPAVYKO PRISIJUNGTI", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), R.string.error_someting_went_wrong, Toast.LENGTH_LONG).show();
             }
         }
     }
-    // [END auth_fui_result]
+
+    public void loginSuccess() {
+        Navigation.findNavController(getView()).navigate(R.id.action_nav_login_to_nav_home);
+    }
 
     private void signOut() {
         // [START auth_fui_signout]

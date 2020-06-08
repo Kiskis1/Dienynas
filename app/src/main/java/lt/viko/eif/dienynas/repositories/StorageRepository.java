@@ -5,6 +5,8 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -44,6 +46,17 @@ public class StorageRepository {
                         ApplicationData.setDestytojas(dest);
                     }
                 });
+    }
+
+    public Task<DocumentSnapshot> getDestytojas(FirebaseUser firebaseUser) {
+        return db.collection("dest")
+                .document(firebaseUser.getUid()).get();
+    }
+
+    public Task<Void> setDestytojas(FirebaseUser firebaseUser, Destytojas destytojas) {
+        return db.collection("dest")
+                .document(firebaseUser.getUid())
+                .set(destytojas);
     }
 
     public void addGroup(Group group) {

@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -16,6 +15,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.List;
 
@@ -48,7 +50,8 @@ public class MainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         final DestytojasViewModel destytojasViewModel = new ViewModelProvider(this).get(DestytojasViewModel.class);
 
-        final EditText mCode = view.findViewById(R.id.main_edit_code);
+        final TextInputLayout mCodeLayout = view.findViewById(R.id.main_edit_code_layout);
+        final TextInputEditText mCode = view.findViewById(R.id.main_edit_code);
         Button mSearch = view.findViewById(R.id.button_search_by_id);
         mProgressBar = view.findViewById(R.id.progressBar);
 
@@ -59,8 +62,10 @@ public class MainFragment extends Fragment {
                 String code = mCode.getText().toString();
                 mCode.onEditorAction(EditorInfo.IME_ACTION_DONE);
                 if (TextUtils.isEmpty(code) || !TextUtils.isDigitsOnly(code)) {
-                    Toast.makeText(getContext(), "Invalid code", Toast.LENGTH_LONG).show();
+                    mCodeLayout.setError(getString(R.string.error_enter_code));
                     return;
+                } else {
+                    mCodeLayout.setError(null);
                 }
                 code = String.format("s%s", code);
                 destytojasViewModel.searchForGrades2(code, mainFragment, mProgressBar);

@@ -1,4 +1,4 @@
-package lt.viko.eif.dienynas;
+package lt.viko.eif.dienynas.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -14,6 +14,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
+import lt.viko.eif.dienynas.R;
 import lt.viko.eif.dienynas.fragments.MainFragment;
 import lt.viko.eif.dienynas.models.Destytojas;
 import lt.viko.eif.dienynas.models.Group;
@@ -43,22 +44,20 @@ public class SearchTask extends AsyncTask<Void, Void, Void> {
     protected void onPreExecute() {
         super.onPreExecute();
         progressBar.setVisibility(View.VISIBLE);
-        mainFragment.getView().findViewById(R.id.progressBarContainer).setVisibility(View.VISIBLE);
+        mainFragment.getView().findViewById(R.id.main_progressBar_container).setVisibility(View.VISIBLE);
         mainFragment.getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
-    // CHECK IF FOUND > 0
-    // ADD ONCANCEL
     @Override
     protected Void doInBackground(Void... voids) {
 //        Log.i(TAG, "SearchTask: " + code);
         groupList.clear();
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(5000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         repo.searchForGrades().get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -88,21 +87,11 @@ public class SearchTask extends AsyncTask<Void, Void, Void> {
     }
 
     @Override
-    protected void onCancelled() {
-        super.onCancelled();
-//        mainFragment.getView().findViewById(R.id.progressBarContainer).setVisibility(View.INVISIBLE);
-//        mainFragment.getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-//        if (progressBar != null && progressBar.isShown()) {
-//            progressBar.setVisibility(View.GONE);
-//        }
-    }
-
-    @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         Log.i(TAG, "onPostExecute: " + mainFragment.toString());
         if (mainFragment.getView() != null) {
-            mainFragment.getView().findViewById(R.id.progressBarContainer).setVisibility(View.INVISIBLE);
+            mainFragment.getView().findViewById(R.id.main_progressBar_container).setVisibility(View.INVISIBLE);
             mainFragment.getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             if (progressBar != null && progressBar.isShown()) {
                 progressBar.setVisibility(View.GONE);

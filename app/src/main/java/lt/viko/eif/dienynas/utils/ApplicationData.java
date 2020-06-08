@@ -12,6 +12,19 @@ public class ApplicationData extends Application {
     private final static String TAG = ApplicationData.class.getSimpleName();
     private static Destytojas destytojas;
     private static long groupId;
+    private static boolean signedIn;
+
+    public static String getTAG() {
+        return TAG;
+    }
+
+    public static boolean isSignedIn() {
+        return signedIn;
+    }
+
+    public static void setSignedIn(boolean signedIn) {
+        ApplicationData.signedIn = signedIn;
+    }
 
     public static long getGroupId() {
         return groupId;
