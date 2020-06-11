@@ -6,7 +6,7 @@
     tools:context=".fragments.GradesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_grades"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/recycler_grades"/>
+        android:layout_height="wrap_content" />
 </HorizontalScrollView>

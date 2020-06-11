@@ -5,22 +5,22 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_mms_white_24dp"
+            android:icon="@drawable/ic_login_black_24dp"
             android:onClick="onLogoutClicked"
             android:title="@string/menu_logout"
             android:visible="false" />
         <item
             android:id="@+id/nav_login"
-            android:icon="@drawable/ic_mms_white_24dp"
+            android:icon="@drawable/ic_login_black_24dp"
             android:title="@string/menu_login"
             android:visible="true" />
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_mms_white_24dp"
+            android:icon="@drawable/ic_home_black_24dp"
             android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_groups"
-            android:icon="@drawable/ic_mms_white_24dp"
+            android:icon="@drawable/ic_group_black_48dp"
             android:title="@string/menu_groups" />
     </group>
 </menu>

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ import lt.viko.eif.dienynas.utils.ApplicationData;
 import lt.viko.eif.dienynas.viewmodels.DestytojasViewModel;
 
 //https://guides.codepath.com/android/using-dialogfragment
-public class AddStudentDialog extends DialogFragment implements View.OnClickListener {
+public class AddStudentDialog extends DialogFragment {
     private final static String TAG = AddStudentDialog.class.getSimpleName();
 
     private static final int OPEN_REQUEST_CODE = 41;
@@ -39,8 +40,6 @@ public class AddStudentDialog extends DialogFragment implements View.OnClickList
     private TextInputEditText mStudCode;
     private TextInputEditText mFullName;
     private DestytojasViewModel destytojasViewModel;
-    private List<Integer> grades = new ArrayList<>();
-
 
     private long id;
 
@@ -48,14 +47,12 @@ public class AddStudentDialog extends DialogFragment implements View.OnClickList
     }
 
     public static AddStudentDialog newInstance(long id) {
-
         Bundle args = new Bundle();
         args.putLong("groupid", id);
         AddStudentDialog fragment = new AddStudentDialog();
         fragment.setArguments(args);
         return fragment;
     }
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,11 +93,13 @@ public class AddStudentDialog extends DialogFragment implements View.OnClickList
                     return;
                 } else mFullNameLayout.setError(null);
 
-                if (mFullName.getText().toString().split(" ").length <= 2) {
+                if (mFullName.getText().toString().split(" ").length != 2) {
+                    Log.i(TAG, "onClick: " + mFullName.getText().toString());
                     mFullNameLayout.setError(getString(R.string.error_enter_full_name));
                     return;
                 } else mFullNameLayout.setError(null);
 
+                List<Integer> grades = new ArrayList<>();
                 Destytojas dest = ApplicationData.getDestytojas();
                 int size = dest.getGroup().get((int) id).getTask().size();
                 for (int i = 0; i < size; i++) {
@@ -108,8 +107,8 @@ public class AddStudentDialog extends DialogFragment implements View.OnClickList
                 }
                 Student stud = new Student(mStudCode.getText().toString(), mFullName.getText().toString(), grades);
                 dest.getGroup().get((int) id).getStudents().add(stud);
-                destytojasViewModel.setDest(dest);
-                Snackbar.make(view, R.string.adding_success_student, Snackbar.LENGTH_LONG).show();
+                //destytojasViewModel.setDestytojas(dest);
+                Snackbar.make(getActivity().getCurrentFocus(), R.string.adding_success_student, Snackbar.LENGTH_LONG).show();
                 dismiss();
             }
         });
@@ -161,11 +160,5 @@ public class AddStudentDialog extends DialogFragment implements View.OnClickList
                 dismiss();
             }
         });
-    }
-
-
-    @Override
-    public void onClick(View view) {
-
     }
 }

@@ -1,5 +1,7 @@
 package lt.viko.eif.dienynas.dialogs;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -7,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -25,7 +28,7 @@ import lt.viko.eif.dienynas.utils.ApplicationData;
 import lt.viko.eif.dienynas.viewmodels.DestytojasViewModel;
 
 //https://guides.codepath.com/android/using-dialogfragment
-public class AddTaskDialog extends DialogFragment implements View.OnClickListener {
+public class AddTaskDialog extends DialogFragment {
     private final static String TAG = AddTaskDialog.class.getSimpleName();
 
     private TextInputLayout mEditTextLayout;
@@ -37,7 +40,6 @@ public class AddTaskDialog extends DialogFragment implements View.OnClickListene
     }
 
     public static AddTaskDialog newInstance(long id) {
-
         Bundle args = new Bundle();
         args.putLong("groupid", id);
         AddTaskDialog fragment = new AddTaskDialog();
@@ -54,7 +56,6 @@ public class AddTaskDialog extends DialogFragment implements View.OnClickListene
         destytojasViewModel = new ViewModelProvider(this).get(DestytojasViewModel.class);
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -69,7 +70,7 @@ public class AddTaskDialog extends DialogFragment implements View.OnClickListene
         mEditText = view.findViewById(R.id.dialog_edit_task);
         Button mCancel = view.findViewById(R.id.dialog_button_cancel);
         Button mSubmit = view.findViewById(R.id.dialog_button_okay);
-
+        showKeyboard();
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,15 +78,15 @@ public class AddTaskDialog extends DialogFragment implements View.OnClickListene
                     mEditTextLayout.setError(getString(R.string.adding_enter_task_name));
                     return;
                 } else mEditTextLayout.setError(null);
-
                 Destytojas dest = ApplicationData.getDestytojas();
 
-                //TODO FIX THIS
-                for (Student stud : dest.getGroup().get((int) id).getStudents())
+                for (Student stud : dest.getGroup().get((int) id).getStudents()) {
                     stud.getGrades().add(0);
+                }
                 dest.getGroup().get((int) id).getTask().add(mEditText.getText().toString());
-                destytojasViewModel.setDest(dest);
-                Snackbar.make(view, R.string.adding_success_task, Snackbar.LENGTH_LONG).show();
+                //destytojasViewModel.setDestytojas(dest);
+                Snackbar.make(getActivity().getCurrentFocus(), R.string.adding_success_task, Snackbar.LENGTH_LONG).show();
+//                closeKeyboard();
                 dismiss();
             }
         });
@@ -110,13 +111,25 @@ public class AddTaskDialog extends DialogFragment implements View.OnClickListene
         mCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                closeKeyboard();
                 dismiss();
             }
         });
     }
 
     @Override
-    public void onClick(View view) {
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        closeKeyboard();
+    }
 
+    private void showKeyboard() {
+        InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    }
+
+    private void closeKeyboard() {
+        InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 }

@@ -2,6 +2,7 @@ package lt.viko.eif.dienynas.viewmodels;
 
 import android.net.Uri;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ProgressBar;
 
@@ -57,17 +58,21 @@ public class DestytojasViewModel extends ViewModel {
         repo.addGroup(group, user);
     }
 
-    public void setDest(Destytojas dest) {
-        repo.setDest(dest);
+//    public void setDest(Destytojas dest) {
+//        repo.setDest(dest);
+//    }
+
+    public void setDestytojas(Destytojas destytojas) {
+        repo.setDestytojas(user, destytojas);
     }
 
     public void saveGrades(Group group) {
         Destytojas dest = ApplicationData.getDestytojas();
         dest.getGroup().set((int) group.getId() - 1, group);
-        repo.setDest(dest);
+        repo.setDestytojas(user, dest);
     }
 
-    public void addBulkStudentsFromExcel(Uri currentUri) throws IOException, InvalidFormatException {
+    public boolean addBulkStudentsFromExcel(Uri currentUri) throws IOException, InvalidFormatException {
         String path = Commons.getPath(currentUri, App.getContext());
         Workbook workbookXLS;
         XSSFWorkbook workbookXLSX;
@@ -78,21 +83,11 @@ public class DestytojasViewModel extends ViewModel {
         } else if (path.contains(".xlsx")) {
             workbookXLSX = new XSSFWorkbook(path);
             sheet = workbookXLSX.getSheetAt(0);
-        } else return;
-//        Workbook workbook = WorkbookFactory.create(new File(path));
-//        Sheet sheet = workbook.getSheetAt(0);
-
-//        XSSFWorkbook workbook = new XSSFWorkbook(path);
-//        XSSFSheet sheet = workbook.getSheetAt(0);
-
+        } else return false;
 
         List<Student> students = new ArrayList<>();
-        List<Integer> grades = new ArrayList<>();
         Destytojas dest = ApplicationData.getDestytojas();
         Group group = dest.getGroup().get((int) ApplicationData.getGroupId());
-        for (String task : group.getTask()) {
-            grades.add(0);
-        }
 
         int codeIndex = 0;
         int nameIndex = 0;
@@ -118,16 +113,26 @@ public class DestytojasViewModel extends ViewModel {
 
         for (int i = rowIndex + 1; i < sheet.getLastRowNum(); i++) {
             Row row = sheet.getRow(i);
+            String code = dataFormatter.formatCellValue(row.getCell(codeIndex));
+            String name = dataFormatter.formatCellValue(row.getCell(nameIndex));
+            if (TextUtils.isEmpty(code) ||
+                    TextUtils.isEmpty(name)) {
+                break;
+            }
+            List<Integer> grades = new ArrayList<>();
+            for (String task : group.getTask()) {
+                grades.add(0);
+            }
             Student stud = new Student();
-            stud.setCode(dataFormatter.formatCellValue(row.getCell(codeIndex)));
-            stud.setFullName(dataFormatter.formatCellValue(row.getCell(nameIndex)));
+            stud.setCode(code);
+            stud.setFullName(name);
             stud.setGrades(grades);
             students.add(stud);
         }
         group.getStudents().addAll(students);
         //TODO: Uncomment to update to firebase
         //setDest(dest);
-
+        return true;
     }
 
     public void searchForGrades2(String code, MainFragment mainFragment, ProgressBar progressBar) {

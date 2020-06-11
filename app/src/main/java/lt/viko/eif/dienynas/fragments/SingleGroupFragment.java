@@ -1,7 +1,6 @@
 package lt.viko.eif.dienynas.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -59,19 +58,19 @@ public class SingleGroupFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_single_group, container, false);
+        return inflater.inflate(R.layout.fragment_single_group, container, false);
+    }
 
-        RelativeLayout relativeLayoutMain = root.findViewById(R.id.relativeLayoutMain);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        RelativeLayout relativeLayoutMain = view.findViewById(R.id.relativeLayoutMain);
         getScreenDimension();
 
         builder = new TableBuilder(relativeLayoutMain, getContext(), SCREEN_HEIGHT, SCREEN_WIDTH, group);
         builder.build();
 
-        return root;
-    }
 
-    private void saveGrades() {
-        destytojasViewModel.saveGrades(builder.getGrades());
     }
 
     private void getScreenDimension() {
@@ -99,12 +98,10 @@ public class SingleGroupFragment extends Fragment {
                 saveGrades();
                 return true;
             case R.id.action_export:
-                //destytojasViewModel.exportGroupToPDF(group);
-                if (destytojasViewModel.exportGroupToPdf(group)) {
+                if (destytojasViewModel.exportGroupToPdf(group))
                     Snackbar.make(getView(), R.string.single_export_success, Snackbar.LENGTH_LONG).show();
-                } else {
+                else
                     Toast.makeText(getContext(), R.string.single_export_fail, Toast.LENGTH_LONG).show();
-                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -113,7 +110,6 @@ public class SingleGroupFragment extends Fragment {
 
     private void showAddTaskDialog() {
         FragmentManager fm = getActivity().getSupportFragmentManager();
-        Log.i(TAG, "showAddTaskDialog: " + group.getId());
         AddTaskDialog addTaskDialog = AddTaskDialog.newInstance(group.getId());
         addTaskDialog.show(fm, "task");
     }
@@ -122,6 +118,10 @@ public class SingleGroupFragment extends Fragment {
         FragmentManager fm = getActivity().getSupportFragmentManager();
         AddStudentDialog addStudentDialog = AddStudentDialog.newInstance(group.getId());
         addStudentDialog.show(fm, "student");
+    }
+
+    private void saveGrades() {
+        destytojasViewModel.saveGrades(builder.getGrades());
     }
 
 

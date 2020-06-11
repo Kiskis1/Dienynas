@@ -125,12 +125,13 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 if (resultData != null) {
                     currentUri = resultData.getData();
-                    Log.d("TAG", "onActivityResult: " + currentUri);
+                    Log.d(TAG, "onActivityResult: " + currentUri);
                     try {
                         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
                         } else if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                            destytojasViewModel.addBulkStudentsFromExcel(currentUri);
+                            if (destytojasViewModel.addBulkStudentsFromExcel(currentUri))
+                                Snackbar.make(getWindow().getDecorView().getRootView(), R.string.adding_success, Snackbar.LENGTH_LONG).show();
                         } else {
                             Toast.makeText(this, R.string.perms_grant_permission, Toast.LENGTH_LONG).show();
                         }
@@ -150,8 +151,10 @@ public class MainActivity extends AppCompatActivity {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 try {
-                    destytojasViewModel.addBulkStudentsFromExcel(currentUri);
-                    Snackbar.make(getWindow().getDecorView().getRootView(), R.string.adding_success, Snackbar.LENGTH_LONG).show();
+                    if (destytojasViewModel.addBulkStudentsFromExcel(currentUri))
+                        Snackbar.make(getWindow().getDecorView().getRootView(), R.string.adding_success, Snackbar.LENGTH_LONG).show();
+                    else
+                        Toast.makeText(this, R.string.error_someting_went_wrong, Toast.LENGTH_LONG).show();
                 } catch (IOException | InvalidFormatException e) {
                     e.printStackTrace();
                 }

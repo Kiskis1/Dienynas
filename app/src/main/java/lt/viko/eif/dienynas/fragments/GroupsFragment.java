@@ -63,17 +63,15 @@ public class GroupsFragment extends Fragment implements Interaction {
 
 
         if (ApplicationData.isSignedIn()) {
+            if (fab.getVisibility() == View.INVISIBLE)
+                fab.setVisibility(View.VISIBLE);
+
             if (list.isEmpty()) {
                 mExplanation.setVisibility(View.VISIBLE);
 
-                if (fab.getVisibility() == View.INVISIBLE)
-                    fab.setVisibility(View.VISIBLE);
             } else {
                 if (mExplanation.getVisibility() == View.VISIBLE)
                     mExplanation.setVisibility(View.INVISIBLE);
-
-                if (fab.getVisibility() == View.INVISIBLE)
-                    fab.setVisibility(View.VISIBLE);
 
                 GroupAdapter mGroupAdapter = new GroupAdapter(this);
 
