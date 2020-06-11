@@ -3,7 +3,6 @@ package lt.viko.eif.dienynas.viewmodels;
 import android.net.Uri;
 import android.os.Environment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.ProgressBar;
 
 import androidx.lifecycle.ViewModel;
@@ -49,18 +48,12 @@ public class DestytojasViewModel extends ViewModel {
 
     private DataFormatter dataFormatter = new DataFormatter();
     private StorageRepository repo = StorageRepository.getInstance();
-    private List<Destytojas> destList = new ArrayList<>();
-    private SearchTask searchTask;
     private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
 
     public void addGroup(Group group) {
         repo.addGroup(group, user);
     }
-
-//    public void setDest(Destytojas dest) {
-//        repo.setDest(dest);
-//    }
 
     public void setDestytojas(Destytojas destytojas) {
         repo.setDestytojas(user, destytojas);
@@ -130,32 +123,22 @@ public class DestytojasViewModel extends ViewModel {
             students.add(stud);
         }
         group.getStudents().addAll(students);
-        //TODO: Uncomment to update to firebase
-        //setDest(dest);
+        // to update to firebase
+        setDestytojas(dest);
         return true;
     }
 
     public void searchForGrades2(String code, MainFragment mainFragment, ProgressBar progressBar) {
-        Log.i(TAG, "searchForGrades2: executed");
-        searchTask = new SearchTask(code, mainFragment, progressBar);
-        Log.i(TAG, "searchForGrades2: " + searchTask.toString());
-        searchTask.execute();
+        new SearchTask(code, mainFragment, progressBar).execute();
     }
 
-//    public void cancelSearchTask() {
-//        if (searchTask != null) {
-//            searchTask.cancel(true);
-//        }
-//    }
-
-
     public boolean exportGroupToPdf(Group group) {
-        boolean completed = false;
-        String extstoragedir = Environment.getExternalStorageDirectory().toString();
-        File folder = new File(extstoragedir, "Dienynas");
+        String extStorageDir = Environment.getExternalStorageDirectory().toString();
+        File folder = new File(extStorageDir, "Dienynas");
         if (!folder.exists()) {
             boolean bool = folder.mkdir();
         }
+        boolean completed = false;
         try {
             String fileName = String.format("%s.pdf", group.getName());
             final File file = new File(folder, fileName);
@@ -230,6 +213,5 @@ public class DestytojasViewModel extends ViewModel {
         table1.addCell(cell);
 
         document.add(table1);
-
     }
 }

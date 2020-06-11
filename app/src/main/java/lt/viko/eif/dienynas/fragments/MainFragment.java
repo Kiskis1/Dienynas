@@ -32,6 +32,9 @@ public class MainFragment extends Fragment {
     private MainFragment mainFragment;
     private ProgressBar mProgressBar;
 
+    public MainFragment() {
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +45,6 @@ public class MainFragment extends Fragment {
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main, container, false);
     }
 
@@ -54,7 +56,6 @@ public class MainFragment extends Fragment {
         final TextInputEditText mCode = view.findViewById(R.id.main_edit_code);
         Button mSearch = view.findViewById(R.id.button_search_by_id);
         mProgressBar = view.findViewById(R.id.progressBar);
-
 
         mSearch.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -29,9 +29,6 @@ import lt.viko.eif.dienynas.utils.Utils;
 public class GroupsFragment extends Fragment implements Interaction {
     private final static String TAG = GroupsFragment.class.getSimpleName();
 
-    private TextView mExplanation;
-    private TextView mLogIn;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,15 +38,14 @@ public class GroupsFragment extends Fragment implements Interaction {
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_groups, container, false);
     }
 
     public void onViewCreated(@NonNull final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mExplanation = view.findViewById(R.id.text_group_empty);
-        mLogIn = view.findViewById(R.id.text_group_not_loggedin);
+        TextView mExplanation = view.findViewById(R.id.text_group_empty);
+        TextView mLogIn = view.findViewById(R.id.text_group_not_loggedin);
 
         final FloatingActionButton fab = view.findViewById(R.id.fab_add_group);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -60,7 +56,6 @@ public class GroupsFragment extends Fragment implements Interaction {
         });
 
         List<Group> list = ApplicationData.getDestytojas().getGroup();
-
 
         if (ApplicationData.isSignedIn()) {
             if (fab.getVisibility() == View.INVISIBLE)

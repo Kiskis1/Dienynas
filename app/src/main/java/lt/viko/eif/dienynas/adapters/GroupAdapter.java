@@ -20,7 +20,6 @@ import lt.viko.eif.dienynas.models.Group;
 public class GroupAdapter
         extends ListAdapter<Group, GroupAdapter.GroupViewHolder> {
 
-
     private OnItemClickListener mOnItemClickListener;
 
     public void setOnItemCLickListener(OnItemClickListener onItemCLickListener) {

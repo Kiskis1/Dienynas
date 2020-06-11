@@ -100,11 +100,9 @@ public class TableBuilder implements HorizontalScroll.ScrollViewListener, Vertic
                 TableRow row4 = (TableRow) row3.getChildAt(j);
                 Spinner spin = (Spinner) row4.getChildAt(0);
                 grades.add(Integer.valueOf(spin.getSelectedItem().toString()));
-//                Log.i(TAG, "saveGrades: " + grades.toString());
             }
             student.setGrades(grades);
             students.add(student);
-//            Log.i(TAG, "saveGrades: "+students.toString());
         }
         update.setStudents(students);
         return update;

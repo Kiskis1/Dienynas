@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="15dp">
-    <!--TODO: STYLE DIALOG-->
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="match_parent"

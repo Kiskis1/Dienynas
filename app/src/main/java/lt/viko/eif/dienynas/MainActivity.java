@@ -80,10 +80,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-//        String jsonFileString = Utils.getJsonFromAssets(App.getContext(), "db.json");
-//        Destytojas dest = Utils.getGsonParser().fromJson(jsonFileString, Destytojas.class);
-//        StorageRepository.getInstance().setData(dest);
         //https://stackoverflow.com/questions/43707386/how-to-change-the-items-of-a-navigation-drawer-after-login
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -91,8 +87,6 @@ public class MainActivity extends AppCompatActivity {
 
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_login, R.id.nav_home, R.id.nav_groups)
                 .setDrawerLayout(drawer)

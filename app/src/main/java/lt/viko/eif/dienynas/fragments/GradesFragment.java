@@ -29,7 +29,6 @@ public class GradesFragment extends Fragment implements Interaction {
     private List<Group> groupList = new ArrayList<>();
 
     public GradesFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -45,7 +44,6 @@ public class GradesFragment extends Fragment implements Interaction {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_grades, container, false);
     }
 

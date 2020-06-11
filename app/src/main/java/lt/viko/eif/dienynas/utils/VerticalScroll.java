@@ -7,10 +7,9 @@ import android.widget.ScrollView;
 public class VerticalScroll extends ScrollView {
 
     private ScrollViewListener scrollViewListener = null;
+
     public interface ScrollViewListener {
-
         void onScrollChanged(VerticalScroll scrollView, int x, int y, int oldx, int oldy);
-
     }
 
     public VerticalScroll(Context context) {
@@ -32,7 +31,7 @@ public class VerticalScroll extends ScrollView {
     @Override
     protected void onScrollChanged(int x, int y, int oldx, int oldy) {
         super.onScrollChanged(x, y, oldx, oldy);
-        if(scrollViewListener != null) {
+        if (scrollViewListener != null) {
             scrollViewListener.onScrollChanged(this, x, y, oldx, oldy);
         }
     }

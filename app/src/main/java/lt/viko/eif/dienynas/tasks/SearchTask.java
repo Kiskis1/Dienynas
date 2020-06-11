@@ -1,6 +1,5 @@
 package lt.viko.eif.dienynas.tasks;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -31,7 +30,6 @@ public class SearchTask extends AsyncTask<Void, Void, Void> {
     private List<Group> groupList = new ArrayList<>();
     private String code;
     private MainFragment mainFragment;
-    private Context context;
     private ProgressBar progressBar;
 
     public SearchTask(String code, MainFragment mainFragment, ProgressBar progressBar) {
@@ -51,7 +49,6 @@ public class SearchTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... voids) {
-//        Log.i(TAG, "SearchTask: " + code);
         groupList.clear();
 //        try {
 //            Thread.sleep(5000);

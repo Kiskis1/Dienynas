@@ -69,15 +69,12 @@ public class SingleGroupFragment extends Fragment {
 
         builder = new TableBuilder(relativeLayoutMain, getContext(), SCREEN_HEIGHT, SCREEN_WIDTH, group);
         builder.build();
-
-
     }
 
     private void getScreenDimension() {
         SCREEN_WIDTH = getResources().getDisplayMetrics().widthPixels;
         SCREEN_HEIGHT = getResources().getDisplayMetrics().heightPixels;
     }
-
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {

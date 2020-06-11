@@ -107,7 +107,7 @@ public class AddStudentDialog extends DialogFragment {
                 }
                 Student stud = new Student(mStudCode.getText().toString(), mFullName.getText().toString(), grades);
                 dest.getGroup().get((int) id).getStudents().add(stud);
-                //destytojasViewModel.setDestytojas(dest);
+                destytojasViewModel.setDestytojas(dest);
                 Snackbar.make(getActivity().getCurrentFocus(), R.string.adding_success_student, Snackbar.LENGTH_LONG).show();
                 dismiss();
             }

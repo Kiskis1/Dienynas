@@ -32,21 +32,6 @@ public class StorageRepository {
     }
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private Destytojas dest;
-
-
-//    public void getDest() {
-//        db.collection("dest")
-//                .document("0xMxDmsl6maRFdBYhJ9T")
-//                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-//                    @Override
-//                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-//                        dest = documentSnapshot.toObject(Destytojas.class);
-//                        //Log.i(TAG, "onCreate: " + dest.getGroup().get(0).getStudents().toString());
-//                        ApplicationData.setDestytojas(dest);
-//                    }
-//                });
-//    }
 
     public Task<DocumentSnapshot> getDestytojas(FirebaseUser firebaseUser) {
         return db.collection("dest")
@@ -81,11 +66,6 @@ public class StorageRepository {
                     }
                 });
     }
-
-//    public void setData(Destytojas dest) {
-//        db.collection("dest")
-//                .add(dest);
-//    }
 
     public void setDest(Destytojas dest) {
         db.collection("dest")

@@ -7,11 +7,11 @@ import android.widget.HorizontalScrollView;
 public class HorizontalScroll extends HorizontalScrollView {
 
     private ScrollViewListener scrollViewListener = null;
+
     public interface ScrollViewListener {
-
         void onScrollChanged(HorizontalScroll scrollView, int x, int y, int oldx, int oldy);
-
     }
+
     public HorizontalScroll(Context context) {
         super(context);
     }
@@ -31,7 +31,7 @@ public class HorizontalScroll extends HorizontalScrollView {
     @Override
     protected void onScrollChanged(int x, int y, int oldx, int oldy) {
         super.onScrollChanged(x, y, oldx, oldy);
-        if(scrollViewListener != null) {
+        if (scrollViewListener != null) {
             scrollViewListener.onScrollChanged(this, x, y, oldx, oldy);
         }
     }

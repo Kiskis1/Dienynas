@@ -84,9 +84,8 @@ public class AddTaskDialog extends DialogFragment {
                     stud.getGrades().add(0);
                 }
                 dest.getGroup().get((int) id).getTask().add(mEditText.getText().toString());
-                //destytojasViewModel.setDestytojas(dest);
+                destytojasViewModel.setDestytojas(dest);
                 Snackbar.make(getActivity().getCurrentFocus(), R.string.adding_success_task, Snackbar.LENGTH_LONG).show();
-//                closeKeyboard();
                 dismiss();
             }
         });

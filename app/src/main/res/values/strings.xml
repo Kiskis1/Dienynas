@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">Dienynas</string>
     <!-- SIDE MENU HEADER -->
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="nav_header_not_logged_in">Not logged in</string>
 
@@ -12,7 +10,6 @@
     <string name="menu_groups">Groups</string>
     <string name="menu_logout">Logout</string>
 
-
     <!-- TOOLBAR MENU-->
     <string name="menu_add_students">Add students</string>
     <string name="menu_add_task">Add task</string>
@@ -20,14 +17,11 @@
     <string name="menu_export">Export grades</string>
 
     <!--MAIN FRAGMENT-->
-    <string name="main_explanation">TODO: Explanation \n TEST</string>
+    <string name="main_explanation">TODO</string>
     <string name="text_type_student_id">Type your student ID:</string>
     <string name="main_search">Search</string>
     <string name="start_of_student_code">S</string>
     <string name="main_no_grades_found">No grades found</string>
-
-    <!-- ITEM GROUP RECYCLER VIEW -->
-    <string name="item_group_name">TextView</string>
 
     <!-- GROUP CREATING FRAGMENT-->
     <string name="creating_group_name">Enter group name:</string>
@@ -80,8 +74,6 @@
     <string name="error_enter_code">Enter code</string>
     <string name="error_enter_task">Enter task</string>
     <string name="error_someting_went_wrong">Something went wrong. Try again</string>
-
-    <!-- LOGIN FRAGMENT -->
 
     <!-- GROUPS FRAGMENT -->
     <string name="groups_no_groups_expl">You have no groups.\nConsider clicking the circle button on the bottom of the screen</string>
