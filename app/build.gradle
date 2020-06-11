@@ -57,6 +57,7 @@ dependencies {
 
     implementation 'com.itextpdf:itextpdf:5.0.6'
     implementation 'in.gauriinfotech:commons:1.0.8'
+    implementation 'com.squareup.picasso:picasso:2.71828'
     implementation files('libs/poishadow-all.jar')
 
     implementation 'com.google.firebase:firebase-firestore:21.4.3'

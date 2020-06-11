@@ -79,6 +79,8 @@ public class AddTaskDialog extends DialogFragment implements View.OnClickListene
                 } else mEditTextLayout.setError(null);
 
                 Destytojas dest = ApplicationData.getDestytojas();
+
+                //TODO FIX THIS
                 for (Student stud : dest.getGroup().get((int) id).getStudents())
                     stud.getGrades().add(0);
                 dest.getGroup().get((int) id).getTask().add(mEditText.getText().toString());

@@ -3,6 +3,8 @@ package lt.viko.eif.dienynas.utils;
 import android.app.Application;
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import lt.viko.eif.dienynas.models.Destytojas;
 import lt.viko.eif.dienynas.models.Group;
 import lt.viko.eif.dienynas.repositories.StorageRepository;
@@ -12,7 +14,7 @@ public class ApplicationData extends Application {
     private final static String TAG = ApplicationData.class.getSimpleName();
     private static Destytojas destytojas;
     private static long groupId;
-    private static boolean signedIn;
+    private static boolean signedIn = false;
 
     public static String getTAG() {
         return TAG;
@@ -55,7 +57,12 @@ public class ApplicationData extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        StorageRepository.getInstance().getDest();
+        //TODO MAYBE PUT THIS IN SPLASH SCREEN
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            ApplicationData.setSignedIn(true);
+            StorageRepository.getInstance().getDest(FirebaseAuth.getInstance().getCurrentUser());
+
+        } else ApplicationData.setSignedIn(false);
         Log.i(TAG, "onCreate: aSDASDASFSFHGASFDADGASDGSDFGSDGSDFGSDFGDFSGADHADFHDSFH");
 
     }

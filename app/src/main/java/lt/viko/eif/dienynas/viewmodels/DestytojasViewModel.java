@@ -7,6 +7,8 @@ import android.widget.ProgressBar;
 
 import androidx.lifecycle.ViewModel;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -23,6 +25,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -47,10 +50,11 @@ public class DestytojasViewModel extends ViewModel {
     private StorageRepository repo = StorageRepository.getInstance();
     private List<Destytojas> destList = new ArrayList<>();
     private SearchTask searchTask;
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
 
     public void addGroup(Group group) {
-        repo.addGroup(group);
+        repo.addGroup(group, user);
     }
 
     public void setDest(Destytojas dest) {
@@ -64,6 +68,24 @@ public class DestytojasViewModel extends ViewModel {
     }
 
     public void addBulkStudentsFromExcel(Uri currentUri) throws IOException, InvalidFormatException {
+        String path = Commons.getPath(currentUri, App.getContext());
+        Workbook workbookXLS;
+        XSSFWorkbook workbookXLSX;
+        Sheet sheet;
+        if (path.contains(".xls")) {
+            workbookXLS = WorkbookFactory.create(new File(path));
+            sheet = workbookXLS.getSheetAt(0);
+        } else if (path.contains(".xlsx")) {
+            workbookXLSX = new XSSFWorkbook(path);
+            sheet = workbookXLSX.getSheetAt(0);
+        } else return;
+//        Workbook workbook = WorkbookFactory.create(new File(path));
+//        Sheet sheet = workbook.getSheetAt(0);
+
+//        XSSFWorkbook workbook = new XSSFWorkbook(path);
+//        XSSFSheet sheet = workbook.getSheetAt(0);
+
+
         List<Student> students = new ArrayList<>();
         List<Integer> grades = new ArrayList<>();
         Destytojas dest = ApplicationData.getDestytojas();
@@ -71,10 +93,6 @@ public class DestytojasViewModel extends ViewModel {
         for (String task : group.getTask()) {
             grades.add(0);
         }
-
-        String path = Commons.getPath(currentUri, App.getContext());
-        Workbook workbook = WorkbookFactory.create(new File(path));
-        Sheet sheet = workbook.getSheetAt(0);
 
         int codeIndex = 0;
         int nameIndex = 0;
@@ -107,7 +125,7 @@ public class DestytojasViewModel extends ViewModel {
             students.add(stud);
         }
         group.getStudents().addAll(students);
-        //Uncomment to update to firebase
+        //TODO: Uncomment to update to firebase
         //setDest(dest);
 
     }

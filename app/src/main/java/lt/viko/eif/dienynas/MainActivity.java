@@ -7,6 +7,8 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,12 +25,17 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 import java.io.IOException;
 
 import lt.viko.eif.dienynas.utils.App;
+import lt.viko.eif.dienynas.utils.ApplicationData;
 import lt.viko.eif.dienynas.viewmodels.DestytojasViewModel;
 
 
@@ -42,6 +49,29 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private Uri currentUri;
 
+    //Kad butu galima naudoti XLS ir XLSX excel formatus
+    static {
+        System.setProperty(
+                "org.apache.poi.javax.xml.stream.XMLInputFactory",
+                "com.fasterxml.aalto.stax.InputFactoryImpl"
+        );
+        System.setProperty(
+                "org.apache.poi.javax.xml.stream.XMLOutputFactory",
+                "com.fasterxml.aalto.stax.OutputFactoryImpl"
+        );
+        System.setProperty(
+                "org.apache.poi.javax.xml.stream.XMLEventFactory",
+                "com.fasterxml.aalto.stax.EventFactoryImpl"
+        );
+    }
+
+    private NavigationView navigationView;
+    private DrawerLayout drawer;
+    private FirebaseUser firebaseUser;
+    private ImageView mHeaderImage;
+    private MaterialTextView mHeaderName;
+    private MaterialTextView mHeaderEmail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,23 +84,32 @@ public class MainActivity extends AppCompatActivity {
 //        String jsonFileString = Utils.getJsonFromAssets(App.getContext(), "db.json");
 //        Destytojas dest = Utils.getGsonParser().fromJson(jsonFileString, Destytojas.class);
 //        StorageRepository.getInstance().setData(dest);
+        //https://stackoverflow.com/questions/43707386/how-to-change-the-items-of-a-navigation-drawer-after-login
 
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         destytojasViewModel = new ViewModelProvider(this).get(DestytojasViewModel.class);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        drawer = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_login, R.id.nav_groups)
+                R.id.nav_login, R.id.nav_home, R.id.nav_groups)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-    }
+        navigationView.getMenu().findItem(R.id.nav_logout).setVisible(ApplicationData.isSignedIn());
+        navigationView.getMenu().findItem(R.id.nav_login).setVisible(!ApplicationData.isSignedIn());
 
+        mHeaderImage = navigationView.getHeaderView(0).findViewById(R.id.image_nav_header);
+        mHeaderEmail = navigationView.getHeaderView(0).findViewById(R.id.text_header_email);
+        mHeaderName = navigationView.getHeaderView(0).findViewById(R.id.text_header_fullname);
+
+        updateHeader();
+    }
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -120,6 +159,30 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(MainActivity.this, R.string.perms_grant_permission, Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    public void onLogoutClicked(MenuItem menuItem) {
+        ApplicationData.setSignedIn(false);
+        FirebaseAuth.getInstance().signOut();
+        menuItem.setVisible(false);
+        navigationView.getMenu().findItem(R.id.nav_login).setVisible(true);
+        drawer.closeDrawer(navigationView);
+        updateHeader();
+        Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment).navigate(R.id.nav_home);
+    }
+
+    public void updateHeader() {
+        if (ApplicationData.isSignedIn()) {
+            mHeaderEmail.setText(firebaseUser.getEmail());
+            mHeaderName.setText(firebaseUser.getDisplayName());
+            if (firebaseUser.getPhotoUrl() != null)
+                Picasso.get().load(firebaseUser.getPhotoUrl()).resize(256, 256).into(mHeaderImage);
+            else mHeaderImage.setImageResource(R.mipmap.ic_launcher_round);
+        } else {
+            mHeaderEmail.setText("");
+            mHeaderName.setText(R.string.nav_header_not_logged_in);
+            mHeaderImage.setImageResource(R.mipmap.ic_launcher_round);
         }
     }
 }

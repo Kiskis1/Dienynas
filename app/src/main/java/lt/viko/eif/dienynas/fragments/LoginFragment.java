@@ -3,8 +3,10 @@ package lt.viko.eif.dienynas.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -18,28 +20,26 @@ import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 
 import java.util.Arrays;
 import java.util.List;
 
 import lt.viko.eif.dienynas.R;
 import lt.viko.eif.dienynas.tasks.LoginTask;
+import lt.viko.eif.dienynas.utils.ApplicationData;
 import lt.viko.eif.dienynas.viewmodels.DestytojasViewModel;
 
 import static android.app.Activity.RESULT_OK;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class LoginFragment extends Fragment {
     private final static String TAG = LoginFragment.class.getSimpleName();
 
     private static final int RC_SIGN_IN = 123;
-
-    private DestytojasViewModel destytojasViewModel;
 
     private ProgressBar mProgressBar;
     private LoginFragment loginFragment;
@@ -55,7 +55,7 @@ public class LoginFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loginFragment = this;
-        destytojasViewModel = new ViewModelProvider(this).get(DestytojasViewModel.class);
+        DestytojasViewModel destytojasViewModel = new ViewModelProvider(this).get(DestytojasViewModel.class);
 
     }
 
@@ -111,6 +111,23 @@ public class LoginFragment extends Fragment {
     }
 
     public void loginSuccess() {
+        NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
+        MenuItem logout = navigationView.getMenu().findItem(R.id.nav_logout);
+        MenuItem login = navigationView.getMenu().findItem(R.id.nav_login);
+        login.setVisible(false);
+        logout.setVisible(true);
+        ApplicationData.setSignedIn(true);
+
+        ImageView mHeaderImage = navigationView.getHeaderView(0).findViewById(R.id.image_nav_header);
+        MaterialTextView mHeaderEmail = navigationView.getHeaderView(0).findViewById(R.id.text_header_email);
+        MaterialTextView mHeaderName = navigationView.getHeaderView(0).findViewById(R.id.text_header_fullname);
+
+        mHeaderEmail.setText(firebaseUser.getEmail());
+        mHeaderName.setText(firebaseUser.getDisplayName());
+        if (firebaseUser.getPhotoUrl() != null)
+            Picasso.get().load(firebaseUser.getPhotoUrl()).resize(256, 256).into(mHeaderImage);
+        else mHeaderImage.setImageResource(R.mipmap.ic_launcher_round);
+
         Navigation.findNavController(getView()).navigate(R.id.action_nav_login_to_nav_home);
     }
 

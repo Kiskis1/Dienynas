@@ -4,11 +4,14 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
+    <string name="nav_header_not_logged_in">Not logged in</string>
 
     <!-- SIDE MENU -->
     <string name="menu_home">Home</string>
     <string name="menu_login">Login</string>
     <string name="menu_groups">Groups</string>
+    <string name="menu_logout">Logout</string>
+
 
     <!-- TOOLBAR MENU-->
     <string name="menu_add_students">Add students</string>
@@ -37,7 +40,7 @@
     <!-- ADD STUDENT DIALOG -->
     <string name="adding_enter_student_code">Enter student code</string>
     <string name="adding_enter_student_full_name">Enter student full name</string>
-    <string name="adding_import_msg">Press button to select file from which to import students.\nCurrently supported formats: ".xls"</string>
+    <string name="adding_import_msg">Press button to select file from which to import students.\nCurrently supported formats: ".xls .xlsx"</string>
     <string name="adding_select">Select</string>
     <string name="adding_add">Add</string>
     <string name="adding_success">Successfully added students!</string>
@@ -62,7 +65,7 @@
     <string name="sample_last_name">Doe</string>
     <string name="sample_full_student_code">s012345</string>
     <string name="sample_student_code">012345</string>
-    <string name="sample_exam_text">E.g Exam</string>
+    <string name="sample_exam_text">Exam</string>
 
     <!-- CONTENT DESCRIPTORS-->
     <string name="content_description_group_logo">Group logo</string>
@@ -79,20 +82,17 @@
     <string name="error_someting_went_wrong">Something went wrong. Try again</string>
 
     <!-- LOGIN FRAGMENT -->
-    <string name="login_your_name">Your first name:</string>
-    <string name="login_your_last_name">Your last name:</string>
 
     <!-- GROUPS FRAGMENT -->
     <string name="groups_no_groups_expl">You have no groups.\nConsider clicking the circle button on the bottom of the screen</string>
     <string name="groups_please_log_in">You are not logged in.\nPlease log in</string>
 
-    <!-- GROUPS FRAGMENT -->
+    <!-- GRADES FRAGMENT -->
     <string name="grades_your_grades">Your grades</string>
 
     <!-- TODO -->
     <string name="table_code_and_name">Code\nFirst Name\nLast Name</string>
     <string name="table_code">Code</string>
-    <string name="menu_logout">Log Out</string>
 
 
 </resources>

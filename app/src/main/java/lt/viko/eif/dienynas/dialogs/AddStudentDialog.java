@@ -96,7 +96,7 @@ public class AddStudentDialog extends DialogFragment implements View.OnClickList
                     return;
                 } else mFullNameLayout.setError(null);
 
-                if (mStudCode.getText().toString().split(" ").length < 2) {
+                if (mFullName.getText().toString().split(" ").length <= 2) {
                     mFullNameLayout.setError(getString(R.string.error_enter_full_name));
                     return;
                 } else mFullNameLayout.setError(null);

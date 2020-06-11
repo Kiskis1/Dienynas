@@ -35,22 +35,33 @@ public class StorageRepository {
     private Destytojas dest;
 
 
-    public void getDest() {
-        db.collection("dest")
-                .document("0xMxDmsl6maRFdBYhJ9T")
-                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                        dest = documentSnapshot.toObject(Destytojas.class);
-                        //Log.i(TAG, "onCreate: " + dest.getGroup().get(0).getStudents().toString());
-                        ApplicationData.setDestytojas(dest);
-                    }
-                });
-    }
+//    public void getDest() {
+//        db.collection("dest")
+//                .document("0xMxDmsl6maRFdBYhJ9T")
+//                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+//                    @Override
+//                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+//                        dest = documentSnapshot.toObject(Destytojas.class);
+//                        //Log.i(TAG, "onCreate: " + dest.getGroup().get(0).getStudents().toString());
+//                        ApplicationData.setDestytojas(dest);
+//                    }
+//                });
+//    }
 
     public Task<DocumentSnapshot> getDestytojas(FirebaseUser firebaseUser) {
         return db.collection("dest")
                 .document(firebaseUser.getUid()).get();
+    }
+
+    public void getDest(FirebaseUser firebaseUser) {
+        db.collection("dest")
+                .document(firebaseUser.getUid()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                Destytojas destytojas = documentSnapshot.toObject(Destytojas.class);
+                ApplicationData.setDestytojas(destytojas);
+            }
+        });
     }
 
     public Task<Void> setDestytojas(FirebaseUser firebaseUser, Destytojas destytojas) {
@@ -59,9 +70,9 @@ public class StorageRepository {
                 .set(destytojas);
     }
 
-    public void addGroup(Group group) {
+    public void addGroup(Group group, FirebaseUser user) {
         db.collection("dest")
-                .document("0xMxDmsl6maRFdBYhJ9T")
+                .document(user.getUid())
                 .update("group", FieldValue.arrayUnion(group))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -71,10 +82,10 @@ public class StorageRepository {
                 });
     }
 
-    public void setData(Destytojas dest) {
-        db.collection("dest")
-                .add(dest);
-    }
+//    public void setData(Destytojas dest) {
+//        db.collection("dest")
+//                .add(dest);
+//    }
 
     public void setDest(Destytojas dest) {
         db.collection("dest")

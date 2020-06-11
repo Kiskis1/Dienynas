@@ -61,43 +61,46 @@ public class GroupsFragment extends Fragment implements Interaction {
 
         List<Group> list = ApplicationData.getDestytojas().getGroup();
 
-        if (!list.isEmpty()) {
-            if (mExplanation.getVisibility() == View.VISIBLE)
-                mExplanation.setVisibility(View.INVISIBLE);
 
-            if (mLogIn.getVisibility() == View.VISIBLE)
-                mLogIn.setVisibility(View.INVISIBLE);
+        if (ApplicationData.isSignedIn()) {
+            if (list.isEmpty()) {
+                mExplanation.setVisibility(View.VISIBLE);
 
-            if (fab.getVisibility() == View.INVISIBLE)
-                fab.setVisibility(View.VISIBLE);
+                if (fab.getVisibility() == View.INVISIBLE)
+                    fab.setVisibility(View.VISIBLE);
+            } else {
+                if (mExplanation.getVisibility() == View.VISIBLE)
+                    mExplanation.setVisibility(View.INVISIBLE);
 
-            GroupAdapter mGroupAdapter = new GroupAdapter(this);
+                if (fab.getVisibility() == View.INVISIBLE)
+                    fab.setVisibility(View.VISIBLE);
 
-            RecyclerView mRecyclerView = view.findViewById(R.id.recycler_group);
-            mRecyclerView.setHasFixedSize(true);
-            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
-            mRecyclerView.setLayoutManager(layoutManager);
+                GroupAdapter mGroupAdapter = new GroupAdapter(this);
 
-            mRecyclerView.setAdapter(mGroupAdapter);
-            mGroupAdapter.submitList(list);
+                RecyclerView mRecyclerView = view.findViewById(R.id.recycler_group);
+                mRecyclerView.setHasFixedSize(true);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+                mRecyclerView.setLayoutManager(layoutManager);
 
-            mGroupAdapter.setOnItemCLickListener(new OnItemClickListener() {
-                @Override
-                public void OnItemClick(Group group) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("group", Utils.getGsonParser().toJson(group));
-                    Log.i(TAG, group.toString());
+                mRecyclerView.setAdapter(mGroupAdapter);
+                mGroupAdapter.submitList(list);
 
-                    Navigation.findNavController(view).navigate(R.id.action_nav_groups_to_nav_single_group, bundle);
-                }
+                mGroupAdapter.setOnItemCLickListener(new OnItemClickListener() {
+                    @Override
+                    public void OnItemClick(Group group) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("group", Utils.getGsonParser().toJson(group));
+                        Log.i(TAG, group.toString());
 
-            });
-        } else {
-            mExplanation.setVisibility(View.VISIBLE);
-            if (!ApplicationData.isSignedIn()) {
-                mLogIn.setVisibility(View.VISIBLE);
-                fab.setVisibility(View.INVISIBLE);
+                        Navigation.findNavController(view).navigate(R.id.action_nav_groups_to_nav_single_group, bundle);
+                    }
+
+                });
             }
+
+        } else {
+            mLogIn.setVisibility(View.VISIBLE);
+            fab.setVisibility(View.INVISIBLE);
         }
     }
 
