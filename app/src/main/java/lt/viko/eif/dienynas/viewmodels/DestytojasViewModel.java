@@ -91,7 +91,7 @@ public class DestytojasViewModel extends ViewModel {
         for (Row row : sheet) {
             for (Cell cell : row) {
 //                Log.i(TAG, "addBulkStudentsFromExcel: "+ dataFormatter.formatCellValue(cell) + cell.getColumnIndex());
-                if (dataFormatter.formatCellValue(cell).contains("Kodas")) {
+                if (dataFormatter.formatCellValue(cell).contains("Kodas") || dataFormatter.formatCellValue(cell).contains("kodas")) {
                     rowIndex = row.getRowNum();
                     codeIndex = cell.getColumnIndex();
                     found1 = true;

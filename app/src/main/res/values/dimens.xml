@@ -7,4 +7,7 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="item_group_name_text_Size">36sp</dimen>
     <dimen name="cell_text_size">4sp</dimen>
+    <dimen name="heading1_text_size">26sp</dimen>
+    <dimen name="heading2_text_size">20sp</dimen>
+    <dimen name="main_text_size">16sp</dimen>
 </resources>

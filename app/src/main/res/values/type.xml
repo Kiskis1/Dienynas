@@ -1,0 +1,60 @@
+<resources>
+
+    <style name="TextAppearance.Tema.Headline1" parent="TextAppearance.MaterialComponents.Headline1">
+        <item name="android:textSize">@dimen/heading1_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <!--Your custom type style here-->
+    </style>
+
+    <style name="TextAppearance.Tema.Headline2" parent="TextAppearance.MaterialComponents.Headline2">
+        <item name="android:textSize">@dimen/heading2_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <!--Your custom type style here-->
+    </style>
+
+    <style name="TextAppearance.Tema.Headline3" parent="TextAppearance.MaterialComponents.Headline3">
+        <!--Your custom type style here-->
+    </style>
+
+    <style name="TextAppearance.Tema.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
+        <!--Your custom type style here-->
+    </style>
+
+    <style name="TextAppearance.Tema.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
+        <!--Your custom type style here-->
+    </style>
+
+    <style name="TextAppearance.Tema.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
+        <!--Your custom type style here-->
+    </style>
+
+    <style name="TextAppearance.Tema.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <!--Your custom type style here-->
+    </style>
+
+    <style name="TextAppearance.Tema.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <!--Your custom type style here-->
+    </style>
+
+    <style name="TextAppearance.Tema.Body1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">@dimen/main_text_size</item>
+        <!--Your custom type style here-->
+    </style>
+
+    <style name="TextAppearance.Tema.Body2" parent="TextAppearance.MaterialComponents.Body2">
+        <!--Your custom type style here-->
+    </style>
+
+    <style name="TextAppearance.Tema.Button" parent="TextAppearance.MaterialComponents.Button">
+        <!--Your custom type style here-->
+    </style>
+
+    <style name="TextAppearance.Tema.Caption" parent="TextAppearance.MaterialComponents.Caption">
+        <!--Your custom type style here-->
+    </style>
+
+    <style name="TextAppearance.Tema.Overline" parent="TextAppearance.MaterialComponents.Overline">
+        <!--Your custom type style here-->
+    </style>
+
+</resources>

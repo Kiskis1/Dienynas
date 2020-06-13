@@ -17,11 +17,16 @@
     <string name="menu_export">Export grades</string>
 
     <!--MAIN FRAGMENT-->
-    <string name="main_explanation">TODO</string>
     <string name="text_type_student_id">Type your student ID:</string>
     <string name="main_search">Search</string>
-    <string name="start_of_student_code">S</string>
     <string name="main_no_grades_found">No grades found</string>
+    <string name="main_header_instr">INSTRUCTIONS</string>
+    <string name="main_header_creating_group">Creating a group</string>
+    <string name="main_instr_creating_group">To create a group press the hamburger icon on top left and navigate to groups. Then press the floating button and enter your group name and starting task.</string>
+    <string name="main_header_add_bulk_stud">Adding bulk students</string>
+    <string name="main_instr_add_bulk_stud">To successfully add students from Excel file, the file must be either .XLS or .XLSX format.\nExcel structure: cells must contain the keywords \'Kodas\' and \'Vardas\' then students names must follow and there should not be anything else after.</string>
+    <string name="main_instr_group_usage">The main functionality of the group is inside menu with three vertical dots.</string>
+    <string name="main_instr_active_dev">This application is under active development and bugs may appear. Please report them to \'laimiscl@gmail.com\'</string>
 
     <!-- GROUP CREATING FRAGMENT-->
     <string name="creating_group_name">Enter group name:</string>
@@ -34,7 +39,7 @@
     <!-- ADD STUDENT DIALOG -->
     <string name="adding_enter_student_code">Enter student code</string>
     <string name="adding_enter_student_full_name">Enter student full name</string>
-    <string name="adding_import_msg">Press button to select file from which to import students.\nCurrently supported formats: ".xls .xlsx"</string>
+    <string name="adding_import_msg">Press button to select file from which to import students.\nCurrently supported formats: .XLS .XLSX</string>
     <string name="adding_select">Select</string>
     <string name="adding_add">Add</string>
     <string name="adding_success">Successfully added students!</string>
@@ -57,8 +62,8 @@
     <string name="sample_full_name">John Doe</string>
     <string name="sample_first_name">John</string>
     <string name="sample_last_name">Doe</string>
-    <string name="sample_full_student_code">s012345</string>
-    <string name="sample_student_code">012345</string>
+    <string name="sample_full_student_code" translatable="false">s012345</string>
+    <string name="sample_student_code" translatable="false">012345</string>
     <string name="sample_exam_text">Exam</string>
 
     <!-- CONTENT DESCRIPTORS-->
@@ -85,6 +90,5 @@
     <!-- TODO -->
     <string name="table_code_and_name">Code\nFirst Name\nLast Name</string>
     <string name="table_code">Code</string>
-
 
 </resources>
