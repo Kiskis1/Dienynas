@@ -40,8 +40,8 @@ import lt.viko.eif.dienynas.models.Group;
 import lt.viko.eif.dienynas.models.Student;
 import lt.viko.eif.dienynas.repositories.StorageRepository;
 import lt.viko.eif.dienynas.tasks.SearchTask;
-import lt.viko.eif.dienynas.utils.App;
 import lt.viko.eif.dienynas.utils.ApplicationData;
+import lt.viko.eif.dienynas.utils.Utils;
 
 public class DestytojasViewModel extends ViewModel {
     private static final String TAG = DestytojasViewModel.class.getSimpleName();
@@ -66,7 +66,7 @@ public class DestytojasViewModel extends ViewModel {
     }
 
     public boolean addBulkStudentsFromExcel(Uri currentUri) throws IOException, InvalidFormatException {
-        String path = Commons.getPath(currentUri, App.getContext());
+        String path = Commons.getPath(currentUri, Utils.getContext());
         Workbook workbookXLS;
         XSSFWorkbook workbookXLSX;
         Sheet sheet;

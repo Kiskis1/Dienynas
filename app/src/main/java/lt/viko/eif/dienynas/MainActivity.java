@@ -34,8 +34,8 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 import java.io.IOException;
 
-import lt.viko.eif.dienynas.utils.App;
 import lt.viko.eif.dienynas.utils.ApplicationData;
+import lt.viko.eif.dienynas.utils.Utils;
 import lt.viko.eif.dienynas.viewmodels.DestytojasViewModel;
 
 
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.setContext(getApplicationContext());
+        Utils.setContext(getApplicationContext());
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
