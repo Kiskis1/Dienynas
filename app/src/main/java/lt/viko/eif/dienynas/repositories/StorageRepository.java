@@ -1,7 +1,5 @@
 package lt.viko.eif.dienynas.repositories;
 
-import android.util.Log;
-
 import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -62,15 +60,8 @@ public class StorageRepository {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.i(TAG, "onSuccess: add group success ASDSDGARaftRAGDFrwqsfgASGFNRWasgftAMFTesgfsatsgdmftewADHTEWAHDGTEWGF");
                     }
                 });
-    }
-
-    public void setDest(Destytojas dest) {
-        db.collection("dest")
-                .document("0xMxDmsl6maRFdBYhJ9T")
-                .set(dest);
     }
 
     public CollectionReference searchForGrades() {

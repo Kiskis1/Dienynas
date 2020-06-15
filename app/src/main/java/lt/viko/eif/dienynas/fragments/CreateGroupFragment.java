@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lt.viko.eif.dienynas.R;
+import lt.viko.eif.dienynas.models.Destytojas;
 import lt.viko.eif.dienynas.models.Group;
 import lt.viko.eif.dienynas.models.Student;
 import lt.viko.eif.dienynas.utils.ApplicationData;
@@ -79,7 +81,11 @@ public class CreateGroupFragment extends Fragment {
                 }
                 task.add(mGroupTask.getText().toString());
                 Group group = new Group(ApplicationData.getLastId(), mGroupName.getText().toString(), task, students);
-                destytojasViewModel.addGroup(group);
+//                destytojasViewModel.addGroup(group);
+                Destytojas dest = ApplicationData.getDestytojas();
+                dest.getGroup().add(group);
+                destytojasViewModel.setDestytojas(dest);
+                Navigation.findNavController(getView()).navigate(R.id.action_nav_create_group_to_nav_groups);
             }
         });
 

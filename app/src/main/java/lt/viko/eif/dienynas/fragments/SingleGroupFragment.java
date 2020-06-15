@@ -118,9 +118,9 @@ public class SingleGroupFragment extends Fragment {
 
     private void saveGrades() {
         boolean result = destytojasViewModel.saveGrades(builder.getGrades());
-        if (result)
-            Snackbar.make(getView(), R.string.single_save_success, Snackbar.LENGTH_LONG).show();
-        else Toast.makeText(getActivity(), R.string.single_save_failure, Toast.LENGTH_LONG).show();
+//        if (result)
+        Snackbar.make(getView(), R.string.single_save_success, Snackbar.LENGTH_LONG).show();
+//        else Toast.makeText(getActivity(), R.string.single_save_failure, Toast.LENGTH_LONG).show();
     }
 
 

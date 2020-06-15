@@ -41,7 +41,13 @@
         android:id="@+id/nav_create_group"
         android:name="lt.viko.eif.dienynas.fragments.CreateGroupFragment"
         android:label="@string/creating_create_group"
-        tools:layout="@layout/fragment_create_group" />
+        tools:layout="@layout/fragment_create_group">
+        <action
+            android:id="@+id/action_nav_create_group_to_nav_groups"
+            app:destination="@id/nav_groups"
+            app:popUpTo="@id/nav_groups"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/nav_single_group"
         android:name="lt.viko.eif.dienynas.fragments.SingleGroupFragment"

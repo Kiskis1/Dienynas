@@ -63,6 +63,7 @@ public class DestytojasViewModel extends ViewModel {
     }
 
     public boolean saveGrades(Group group) {
+        //always returns false?
         final boolean[] success = {false};
         Destytojas dest = ApplicationData.getDestytojas();
         dest.getGroup().set((int) group.getId() - 1, group);
