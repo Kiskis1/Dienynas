@@ -1,5 +1,7 @@
 package lt.viko.eif.dienynas.fragments;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -23,12 +27,14 @@ import lt.viko.eif.dienynas.R;
 import lt.viko.eif.dienynas.dialogs.AddStudentDialog;
 import lt.viko.eif.dienynas.dialogs.AddTaskDialog;
 import lt.viko.eif.dienynas.models.Group;
+import lt.viko.eif.dienynas.utils.ApplicationData;
 import lt.viko.eif.dienynas.utils.TableBuilder;
 import lt.viko.eif.dienynas.utils.Utils;
 import lt.viko.eif.dienynas.viewmodels.DestytojasViewModel;
 
 public class SingleGroupFragment extends Fragment {
     private final static String TAG = SingleGroupFragment.class.getSimpleName();
+    private static final int STORAGE_WRITE_PERMISSION_CODE = 32;
 
     private Group group;
 
@@ -94,13 +100,28 @@ public class SingleGroupFragment extends Fragment {
                 saveGrades();
                 return true;
             case R.id.action_export:
-                if (destytojasViewModel.exportGroupToPdf(group))
-                    Snackbar.make(getView(), R.string.single_export_success, Snackbar.LENGTH_LONG).show();
-                else
-                    Toast.makeText(getContext(), R.string.single_export_fail, Toast.LENGTH_LONG).show();
+                ApplicationData.setGroupId(group.getId() - 1);
+                export();
+//                if (destytojasViewModel.exportGroupToPdf(group))
+//                    Snackbar.make(getView(), R.string.single_export_success, Snackbar.LENGTH_LONG).show();
+//                else
+//                    Toast.makeText(getContext(), R.string.single_export_fail, Toast.LENGTH_LONG).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void export() {
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_WRITE_PERMISSION_CODE);
+        } else if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            if (destytojasViewModel.exportGroupToPdf(group))
+                Snackbar.make(getView(), R.string.single_export_success, Snackbar.LENGTH_LONG).show();
+            else
+                Toast.makeText(getContext(), R.string.single_export_fail, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getContext(), R.string.perms_grant_permission, Toast.LENGTH_LONG).show();
         }
     }
 

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -44,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int OPEN_REQUEST_CODE = 41;
     private static final int STORAGE_PERMISSION_CODE = 23;
+    private static final int STORAGE_WRITE_PERMISSION_CODE = 32;
+
 
     private DestytojasViewModel destytojasViewModel;
     private AppBarConfiguration mAppBarConfiguration;
@@ -118,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 if (resultData != null) {
                     currentUri = resultData.getData();
-                    Log.d(TAG, "onActivityResult: " + currentUri);
                     try {
                         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
@@ -128,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(this, R.string.perms_grant_permission, Toast.LENGTH_LONG).show();
                         }
-//                        destytojasViewModel.addBulkStudentsFromExcel(currentUri);
                     } catch (IOException | InvalidFormatException e) {
                         e.printStackTrace();
                     }
@@ -151,6 +150,17 @@ public class MainActivity extends AppCompatActivity {
                 } catch (IOException | InvalidFormatException e) {
                     e.printStackTrace();
                 }
+                Snackbar.make(getWindow().getDecorView().getRootView(), R.string.perms_granted_permission, Snackbar.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(MainActivity.this, R.string.perms_grant_permission, Toast.LENGTH_LONG).show();
+            }
+        } else if (requestCode == STORAGE_WRITE_PERMISSION_CODE) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (destytojasViewModel.exportGroupToPdf(ApplicationData.getDestytojas().getGroup().get((int) ApplicationData.getGroupId())))
+                    Snackbar.make(getWindow().getDecorView().getRootView(), R.string.single_export_success, Snackbar.LENGTH_LONG).show();
+                else
+                    Toast.makeText(this, R.string.single_export_fail, Toast.LENGTH_LONG).show();
                 Snackbar.make(getWindow().getDecorView().getRootView(), R.string.perms_granted_permission, Snackbar.LENGTH_LONG).show();
             } else {
                 Toast.makeText(MainActivity.this, R.string.perms_grant_permission, Toast.LENGTH_LONG).show();
