@@ -46,7 +46,6 @@ public class SingleGroupFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        //Log.i(TAG, getArguments().getString("group"));
         assert getArguments() != null;
         group = Utils.getGsonParser().fromJson(getArguments().getString("group"), Group.class);
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
@@ -118,7 +117,10 @@ public class SingleGroupFragment extends Fragment {
     }
 
     private void saveGrades() {
-        destytojasViewModel.saveGrades(builder.getGrades());
+        boolean result = destytojasViewModel.saveGrades(builder.getGrades());
+        if (result)
+            Snackbar.make(getView(), R.string.single_save_success, Snackbar.LENGTH_LONG).show();
+        else Toast.makeText(getActivity(), R.string.single_save_failure, Toast.LENGTH_LONG).show();
     }
 
 

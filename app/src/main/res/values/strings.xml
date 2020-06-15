@@ -57,6 +57,8 @@
     <!-- SINGLE GROUP FRAGMENT -->
     <string name="single_export_success">Exported successfully</string>
     <string name="single_export_fail">Export failed</string>
+    <string name="single_save_success">Successfully saved grades</string>
+    <string name="single_save_failure">Failed to save grades</string>
 
     <!-- SAMPLES -->
     <string name="sample_full_name">John Doe</string>

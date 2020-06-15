@@ -60,4 +60,6 @@
     <string name="main_instr_add_bulk_stud">Norint sėkmingai pridėti studentus iš \"Excel\" rinkmenos, ji turi būti arba .XLS arba .XLSX formato. Excel struktūra: langeliai privalo turėti raktažodžius \'Kodas\' ir \'Vardas\' ir išvardinti studentai. Po studentų sąrašo neturi būti nieko daugiau.</string>
     <string name="main_instr_group_usage">Pagrindinis grupės funkcionalumas yra paspaudus tris vertikaliai išdėstytus taškus.</string>
     <string name="main_instr_active_dev">Ši aplikacija yra nuolat tobulinama ir gali atsirasti klaidų. Prašau pranešti apie klaidas el. paštu: \'laimiscl@gmail.com\'</string>
+    <string name="single_save_success">Sėkmingai išsaugoti pažymiai</string>
+    <string name="single_save_failure">Nepavyko išsaugoti pažymių</string>
 </resources>

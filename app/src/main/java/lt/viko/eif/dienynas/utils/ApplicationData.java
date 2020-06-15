@@ -1,7 +1,6 @@
 package lt.viko.eif.dienynas.utils;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -63,7 +62,6 @@ public class ApplicationData extends Application {
             StorageRepository.getInstance().getDest(FirebaseAuth.getInstance().getCurrentUser());
 
         } else ApplicationData.setSignedIn(false);
-        Log.i(TAG, "onCreate: aSDASDASFSFHGASFDADGASDGSDFGSDGSDFGSDFGDFSGADHADFHDSFH");
 
     }
 }

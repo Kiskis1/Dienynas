@@ -1,7 +1,6 @@
 package lt.viko.eif.dienynas.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,8 +36,6 @@ public class GradesFragment extends Fragment implements Interaction {
         assert getArguments() != null;
         groupList = Utils.getGsonParser().fromJson(getArguments().getString("group"), new TypeToken<List<Group>>() {
         }.getType());
-
-        Log.i(TAG, "onCreate: grades " + groupList.toString());
     }
 
     @Override

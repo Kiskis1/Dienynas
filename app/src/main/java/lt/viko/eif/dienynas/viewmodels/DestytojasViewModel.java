@@ -5,8 +5,11 @@ import android.os.Environment;
 import android.text.TextUtils;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.itextpdf.text.Document;
@@ -59,10 +62,22 @@ public class DestytojasViewModel extends ViewModel {
         repo.setDestytojas(user, destytojas);
     }
 
-    public void saveGrades(Group group) {
+    public boolean saveGrades(Group group) {
+        final boolean[] success = {false};
         Destytojas dest = ApplicationData.getDestytojas();
         dest.getGroup().set((int) group.getId() - 1, group);
-        repo.setDestytojas(user, dest);
+        repo.setDestytojas(user, dest).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                success[0] = true;
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                success[0] = false;
+            }
+        });
+        return success[0];
     }
 
     public boolean addBulkStudentsFromExcel(Uri currentUri) throws IOException, InvalidFormatException {

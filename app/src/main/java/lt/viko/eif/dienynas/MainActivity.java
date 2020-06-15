@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //https://stackoverflow.com/questions/43707386/how-to-change-the-items-of-a-navigation-drawer-after-login
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         destytojasViewModel = new ViewModelProvider(this).get(DestytojasViewModel.class);
@@ -154,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Snackbar.make(getWindow().getDecorView().getRootView(), R.string.perms_granted_permission, Snackbar.LENGTH_LONG).show();
             } else {
-                Toast.makeText(MainActivity.this, R.string.perms_grant_permission, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.perms_grant_permission, Toast.LENGTH_LONG).show();
             }
         }
     }

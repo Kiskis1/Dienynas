@@ -70,14 +70,13 @@ public class MainFragment extends Fragment {
                 }
                 code = String.format("s%s", code);
                 destytojasViewModel.searchForGrades2(code, mainFragment, mProgressBar);
-                //Log.i(TAG, groupList.toString());
             }
         });
     }
 
     public void postGrades(List<Group> groupList) {
         if (groupList.isEmpty()) {
-            Toast.makeText(getContext(), R.string.main_no_grades_found, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.main_no_grades_found, Toast.LENGTH_LONG).show();
             return;
         }
         Bundle bundle = new Bundle();
